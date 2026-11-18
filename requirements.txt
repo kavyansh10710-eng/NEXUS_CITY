@@ -12,3 +12,4 @@ streamlit-folium
 plotly
 pandas
 numpy
+reportlab

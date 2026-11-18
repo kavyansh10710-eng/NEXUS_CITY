@@ -7,3 +7,8 @@ pydeck
 joblib
 folium
 streamlit-folium
+folium
+streamlit-folium
+plotly
+pandas
+numpy

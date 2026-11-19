@@ -1,8 +1,7 @@
 import streamlit as st
 import folium
-import random
+
 from streamlit_folium import st_folium
-from folium.plugins import HeatMap
 
 st.set_page_config(layout="wide")
 
@@ -99,6 +98,25 @@ risk_score = (
 )
 
 risk_score = round(min(risk_score,100))
+# Risk Zone Color
+
+if risk_score >= 70:
+    zone_color = "red"
+
+elif risk_score >= 40:
+    zone_color = "orange"
+
+else:
+    zone_color = "green"
+    folium.Circle(
+    location=[lat, lon],
+    radius=3000,
+    color=zone_color,
+    fill=True,
+    fill_color=zone_color,
+    fill_opacity=0.2,
+    popup=f"Risk Score: {risk_score}%"
+).add_to(m)
 
 # ==========================
 # MAP
@@ -120,34 +138,46 @@ folium.TileLayer(
 
 # Marker
 
-folium.Marker(
-    [lat, lon],
+folium.CircleMarker(
+    location=[lat, lon],
+    radius=12,
     popup=city,
     tooltip=city,
-    icon=folium.Icon(
-        color="red",
-        icon="info-sign"
-    )
+    color="red",
+    fill=True,
+    fill_color="red",
+    fill_opacity=0.9
 ).add_to(m)
 
-# ==========================
-# HEATMAP
-# ==========================
 
-heat_data = []
 
-for i in range(50):
+# Satellite Layer
 
-    heat_data.append([
-        lat + random.uniform(-0.05,0.05),
-        lon + random.uniform(-0.05,0.05),
-        random.uniform(0.4,1)
-    ])
-
-HeatMap(
-    heat_data,
-    radius=20
+folium.TileLayer(
+    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attr="Esri Satellite",
+    name="Satellite"
 ).add_to(m)
+
+# 👇 આ નવો Code ઉમેરો
+
+folium.Circle(
+    location=[lat, lon],
+    radius=3000,
+    color="red",
+    fill=True,
+    fill_color="red",
+    fill_opacity=0.15
+).add_to(m)
+
+# પછી Map Show કરો
+
+st_folium(
+    m,
+    width=1500,
+    height=800,
+    returned_objects=[]
+)
 
 # ==========================
 # SHOW MAP
@@ -156,7 +186,8 @@ HeatMap(
 st_folium(
     m,
     width=1500,
-    height=700
+    height=800,
+    returned_objects=[]
 )
 
 # ==========================

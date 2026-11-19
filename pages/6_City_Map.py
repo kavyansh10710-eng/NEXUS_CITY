@@ -1,6 +1,5 @@
 import streamlit as st
 import folium
-
 from streamlit_folium import st_folium
 
 st.set_page_config(layout="wide")
@@ -19,7 +18,6 @@ cities = {
         "aqi": 70,
         "temp": 31
     },
-
     "Ahmedabad (Gujarat)": {
         "lat": 23.0225,
         "lon": 72.5714,
@@ -27,7 +25,6 @@ cities = {
         "aqi": 120,
         "temp": 37
     },
-
     "Mumbai (Maharashtra)": {
         "lat": 19.0760,
         "lon": 72.8777,
@@ -35,7 +32,6 @@ cities = {
         "aqi": 95,
         "temp": 33
     },
-
     "Bombay (Maharashtra)": {
         "lat": 19.0760,
         "lon": 72.8777,
@@ -60,34 +56,28 @@ lat = data["lat"]
 lon = data["lon"]
 
 # ==========================
-# AI FUTURE SIMULATOR
+# SIDEBAR SIMULATION
 # ==========================
 
 st.sidebar.title("⚙️ Future Simulation")
 
 rainfall_change = st.sidebar.slider(
     "🌧 Rainfall Increase (%)",
-    0,
-    100,
-    20
+    0, 100, 20
 )
 
 population_growth = st.sidebar.slider(
     "👥 Population Growth (%)",
-    0,
-    100,
-    15
+    0, 100, 15
 )
 
 temp_change = st.sidebar.slider(
     "🔥 Temperature Rise (°C)",
-    0,
-    10,
-    2
+    0, 10, 2
 )
 
 # ==========================
-# RISK SCORE
+# AI RISK SCORE
 # ==========================
 
 risk_score = (
@@ -97,29 +87,21 @@ risk_score = (
     + temp_change * 2
 )
 
-risk_score = round(min(risk_score,100))
-# Risk Zone Color
+risk_score = min(round(risk_score), 100)
+
+# ==========================
+# RISK COLOR
+# ==========================
 
 if risk_score >= 70:
     zone_color = "red"
-
 elif risk_score >= 40:
     zone_color = "orange"
-
 else:
     zone_color = "green"
-    folium.Circle(
-    location=[lat, lon],
-    radius=3000,
-    color=zone_color,
-    fill=True,
-    fill_color=zone_color,
-    fill_opacity=0.2,
-    popup=f"Risk Score: {risk_score}%"
-).add_to(m)
 
 # ==========================
-# MAP
+# CREATE MAP
 # ==========================
 
 m = folium.Map(
@@ -128,7 +110,9 @@ m = folium.Map(
     tiles=None
 )
 
-# Satellite Layer
+# ==========================
+# SATELLITE VIEW
+# ==========================
 
 folium.TileLayer(
     tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -136,69 +120,55 @@ folium.TileLayer(
     name="Satellite"
 ).add_to(m)
 
-# Marker
+# ==========================
+# CITY MARKER
+# ==========================
 
 folium.CircleMarker(
     location=[lat, lon],
-    radius=12,
+    radius=10,
     popup=city,
     tooltip=city,
-    color="red",
+    color=zone_color,
     fill=True,
-    fill_color="red",
-    fill_opacity=0.9
+    fill_color=zone_color,
+    fill_opacity=1
 ).add_to(m)
 
-
-
-# Satellite Layer
-
-folium.TileLayer(
-    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri Satellite",
-    name="Satellite"
-).add_to(m)
-
-# 👇 આ નવો Code ઉમેરો
+# ==========================
+# RISK ZONE
+# ==========================
 
 folium.Circle(
     location=[lat, lon],
     radius=3000,
-    color="red",
+    color=zone_color,
     fill=True,
-    fill_color="red",
-    fill_opacity=0.15
+    fill_color=zone_color,
+    fill_opacity=0.20,
+    popup=f"Risk Score: {risk_score}%"
 ).add_to(m)
 
-# પછી Map Show કરો
-
-st_folium(
-    m,
-    width=1500,
-    height=800,
-    returned_objects=[]
-)
-
 # ==========================
-# SHOW MAP
+# MAP DISPLAY
 # ==========================
 
 st_folium(
     m,
     width=1500,
-    height=800,
+    height=750,
     returned_objects=[]
 )
 
 # ==========================
-# DASHBOARD
+# CITY METRICS
 # ==========================
 
-col1,col2,col3,col4 = st.columns(4)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.metric(
-        "🌧 Flood Risk",
+        "🌊 Flood Risk",
         f"{data['flood']}%"
     )
 
@@ -226,32 +196,30 @@ with col4:
 
 st.subheader("🤖 AI Recommendation")
 
-if risk_score > 70:
+if risk_score >= 70:
 
     st.error("""
 🔴 HIGH RISK
 
 ✅ Expand Water Reservoir
 
-✅ Emergency Flood Planning
+✅ Improve Drainage
 
-✅ Improve Drainage System
+✅ Activate Emergency Teams
 
-✅ Increase Monitoring Sensors
-
-✅ Public Warning System
+✅ Continuous Monitoring
 """)
 
-elif risk_score > 40:
+elif risk_score >= 40:
 
     st.warning("""
 🟠 MEDIUM RISK
 
-✅ Continuous Monitoring
+✅ Monitor Environment
 
-✅ Improve City Infrastructure
+✅ Upgrade Infrastructure
 
-✅ Water Management Planning
+✅ Prepare Backup Resources
 """)
 
 else:
@@ -259,8 +227,9 @@ else:
     st.success("""
 🟢 LOW RISK
 
-✅ City Conditions Stable
+✅ Stable Conditions
 
-✅ Continue Smart Monitoring
+✅ Continue Monitoring
+
+✅ Maintain Smart Infrastructure
 """)
-

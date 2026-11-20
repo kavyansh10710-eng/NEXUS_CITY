@@ -1,12 +1,17 @@
 import streamlit as st
+import streamlit as st
+
+st.image(
+"assets/logo.png",
+width=180
+)
 
 with open("assets/style.css") as f:
     st.markdown(
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True
     )
-import streamlit as st
-
+    
 st.set_page_config(
     page_title="NEXUS AI Future Simulator",
     page_icon="🌍",

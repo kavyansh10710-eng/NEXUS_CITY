@@ -2,7 +2,9 @@ import streamlit as st
 import plotly.graph_objects as go
 
 st.title("🌫 Air Quality Monitor")
-
+st.subheader(
+"🌫 Air Quality Intelligence Network"
+)
 aqi = st.slider(
     "AQI",
     0,

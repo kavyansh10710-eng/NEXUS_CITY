@@ -4,7 +4,7 @@ from streamlit_folium import st_folium
 
 st.set_page_config(layout="wide")
 
-st.title("🛰️ NEXUS Smart City Digital Twin")
+st.title("🛰️ City Map")
 
 # ==========================
 # CITY DATA

@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("🖥 NEXUS Smart City Command Center")
+st.title("🖥 City Command Center")
 
 col1,col2,col3,col4 = st.columns(4)
 

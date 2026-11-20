@@ -13,8 +13,52 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🌍 NEXUS ∞ AI Future Simulator")
+st.markdown("""
+<div style="
+background:linear-gradient(135deg,#00D4FF,#7C3AED);
+padding:40px;
+border-radius:25px;
+text-align:center;
+box-shadow:0px 0px 40px rgba(0,212,255,.6);
+">
+
+<h1 style="color:white;">
+🌍 NEXUS ∞
+</h1>
+
+<h3 style="color:white;">
+Smart City AI Digital Twin Platform
+</h3>
+
+<p style="color:white;">
+Detect • Predict • Decide
+</p>
+
+</div>
+""",
+unsafe_allow_html=True)
 st.subheader("Detect → Predict → Decide")
+st.sidebar.markdown("""
+# 🤖 NEXUS AI
+
+Status : 🟢 Online
+
+AI Confidence : 98%
+
+Monitoring:
+
+✅ Flood Prediction
+
+✅ Weather Intelligence
+
+✅ AQI Monitoring
+
+✅ Energy Forecasting
+
+✅ City Digital Twin
+
+✅ AI Decision Support
+""")
 
 st.markdown("""
 ### Welcome to NEXUS CITY

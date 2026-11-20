@@ -51,3 +51,16 @@ st.plotly_chart(
     fig,
     use_container_width=True
 )
+st.success(
+"""
+📈 Comparative Smart City Analytics
+
+✓ Infrastructure Risk
+
+✓ Population Growth
+
+✓ Environmental Factors
+
+✓ AI Future Score
+"""
+)

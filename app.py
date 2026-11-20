@@ -1,10 +1,7 @@
 import streamlit as st
 import streamlit as st
+from logo import show_logo
 
-st.image(
-"assets/logo.png",
-width=180
-)
 
 with open("assets/style.css") as f:
     st.markdown(
@@ -17,6 +14,8 @@ st.set_page_config(
     page_icon="🌍",
     layout="wide"
 )
+
+show_logo()
 
 st.markdown("""
 <div style="

@@ -20,8 +20,6 @@ NEXUS is an AI-powered Future Simulation Platform.
 
 ✅ Air Quality Analysis
 
-✅ Smart City Planning
-
 ✅ Explainable AI
 
 ✅ Future Scenario Simulation

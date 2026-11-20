@@ -1,5 +1,8 @@
-import streamlit as st
 
+import streamlit as st
+st.error(
+"🔴 NEXUS COMMAND CENTER ACTIVE"
+)
 st.title("🖥 City Command Center")
 
 col1,col2,col3,col4 = st.columns(4)

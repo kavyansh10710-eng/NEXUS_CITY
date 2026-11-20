@@ -48,6 +48,17 @@ col3.metric("🌫 Air Quality", "Good")
 col4.metric("⚡ Energy Demand", "Normal", f"{electricity:+}%")
 
 st.divider()
+st.info(
+"""
+🛰 Live Infrastructure Monitoring
+
+⚡ AI Powered Forecasting
+
+🌊 Disaster Intelligence
+
+🌫 Pollution Surveillance
+"""
+)
 
 # -------------------------
 # Data Analysis Section

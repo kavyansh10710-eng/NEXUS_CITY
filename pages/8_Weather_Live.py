@@ -2,7 +2,9 @@ import streamlit as st
 import random
 
 st.title("☁️ Smart Weather Monitoring")
-
+st.subheader(
+"☁️ Weather Intelligence Center"
+)
 cities = [
     "Navsari",
     "Ahmedabad",

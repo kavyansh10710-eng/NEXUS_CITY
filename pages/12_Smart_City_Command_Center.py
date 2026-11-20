@@ -4,7 +4,17 @@ st.error(
 "🔴 NEXUS COMMAND CENTER ACTIVE"
 )
 st.title("🖥 City Command Center")
+st.success(
+"🛰 542 Sensors Online"
+)
 
+st.success(
+"⚡ Power Grid Connected"
+)
+
+st.success(
+"☁ Weather Monitoring Active"
+)
 col1,col2,col3,col4 = st.columns(4)
 
 col1.metric(

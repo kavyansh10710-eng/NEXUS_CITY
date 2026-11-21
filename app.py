@@ -8,7 +8,14 @@ with open("assets/style.css") as f:
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True
     )
-    
+    st.markdown("""
+<div style="
+background:linear-gradient(135deg,#00D4FF,#7C3AED);
+padding:40px;
+border-radius:25px;
+text-align:center;
+box-shadow:0px 0px 40px rgba(0,212,255,.6);
+">
 st.set_page_config(
     page_title="NEXUS AI Future Simulator",
     page_icon="🌍",

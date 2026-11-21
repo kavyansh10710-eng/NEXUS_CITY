@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import requests
 from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 
 # ======================
 # PAGE CONFIG
@@ -14,6 +15,24 @@ st.set_page_config(
 )
 
 st.title("📊 NEXUS Live Analytics Center")
+
+# Auto Refresh Every 60 Seconds
+
+st_autorefresh(
+    interval=60 * 1000,   # 60 seconds
+    key="analytics_refresh"
+)
+
+st.success("🔄 Live data auto-refreshes every 60 seconds")
+col1, col2 = st.columns([4,1])
+
+with col1:
+    st.caption(
+        f"Last Updated: {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
+    )
+
+with col2:
+    st.success("🟢 LIVE")
 
 st.caption(
     f"Last Updated: {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"

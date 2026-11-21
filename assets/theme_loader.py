@@ -1,19 +1,19 @@
 import streamlit as st
 
-theme = st.sidebar.selectbox(
-    "🎨 Select Theme",
-    [
-        "Cyberpunk",
-        "Golden",
-        "Light",
-        "Midnight"
-    ]
-)
+def apply_theme():
 
-if theme == "Cyberpunk":
-    from themes.cyberpunk import load_theme
+    theme = st.sidebar.selectbox(
+        "🎨 Select Theme",
+        [
+            "Cyberpunk",
+            "Golden"
+        ]
+    )
 
-elif theme == "Golden":
-    from themes.golden import load_theme
+    if theme == "Cyberpunk":
+        from themes.cyberpunk import load_theme
 
-load_theme()
+    elif theme == "Golden":
+        from themes.golden import load_theme
+
+    load_theme()

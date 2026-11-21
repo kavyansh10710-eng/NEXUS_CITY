@@ -13,7 +13,7 @@ with open("assets/style.css") as f:
 st.set_page_config(layout="wide")
 
 show_logo()
-    st.markdown("""
+    
 <div style="
 background:linear-gradient(135deg,#00D4FF,#7C3AED);
 padding:40px;

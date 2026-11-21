@@ -1,12 +1,11 @@
 import streamlit as st
 from logo import show_logo
 
-# Page Config
-show_logo()
+# Page Setup
 st.set_page_config(
     page_title="NEXUS ∞",
-    page_icon="🌍",
-    layout="wide"
+    layout="wide",
+    page_icon="🌍"
 )
 
 # CSS Load
@@ -23,22 +22,17 @@ show_logo()
 st.sidebar.markdown("""
 # 🤖 NEXUS AI
 
-🟢 Status: Online
+🟢 Status : Online
 
-🎯 AI Confidence: 98%
+🎯 AI Confidence : 98%
 
 ### Monitoring
 
 ✅ Flood Prediction
-
 ✅ Weather Intelligence
-
 ✅ AQI Monitoring
-
 ✅ Energy Forecasting
-
 ✅ City Digital Twin
-
 ✅ AI Decision Support
 """)
 
@@ -65,6 +59,6 @@ NEXUS is an AI-Powered Smart City Digital Twin Platform.
 
 # Hero Image
 st.image(
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab",
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920",
     use_container_width=True
 )

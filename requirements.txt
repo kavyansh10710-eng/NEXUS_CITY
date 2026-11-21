@@ -13,3 +13,4 @@ plotly
 pandas
 numpy
 reportlab
+streamlit-autorefresh

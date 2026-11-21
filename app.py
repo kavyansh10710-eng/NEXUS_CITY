@@ -8,6 +8,11 @@ with open("assets/style.css") as f:
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True
     )
+   
+
+st.set_page_config(layout="wide")
+
+show_logo()
     st.markdown("""
 <div style="
 background:linear-gradient(135deg,#00D4FF,#7C3AED);

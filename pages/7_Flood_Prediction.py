@@ -3,9 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 st.title("🌊 Flood Prediction Center")
-st.subheader(
-"🌊 AI Flood Intelligence Engine"
-)
+
 rainfall = st.slider(
     "Rainfall (mm)",
     0,

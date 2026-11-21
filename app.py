@@ -17,9 +17,7 @@ text-align:center;
 box-shadow:0px 0px 40px rgba(0,212,255,.6);
 ">
 
-)
 
-show_logo()
 
 <h1 style="color:white;">
 🌍 NEXUS ∞

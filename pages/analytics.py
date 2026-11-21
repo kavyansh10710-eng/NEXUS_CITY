@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from streamlit_autorefresh import st_autorefresh
+import pandas as pd
+import plotly.express as px
+import requests
 from datetime import datetime
 
 st.title("📊 NEXUS Live Analytics Center")
@@ -12,7 +14,7 @@ st.caption(
 )
 
 st_autorefresh(
-    interval=60000,
+    interval=300000
     key="analytics_refresh"
 )
 
@@ -47,7 +49,7 @@ weather_url = (
     f"&hourly=temperature_2m,precipitation"
     f"&forecast_days=2"
 )
-
+import requests
 weather_data = requests.get(weather_url).json()
 
 # =====================

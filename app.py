@@ -17,15 +17,6 @@ st.set_page_config(
 
 show_logo()
 
-st.markdown("""
-<div style="
-background:linear-gradient(135deg,#00D4FF,#7C3AED);
-padding:40px;
-border-radius:25px;
-text-align:center;
-box-shadow:0px 0px 40px rgba(0,212,255,.6);
-">
-
 <h1 style="color:white;">
 🌍 NEXUS ∞
 </h1>

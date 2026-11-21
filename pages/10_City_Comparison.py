@@ -1,7 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from utils.ui import render_header
 
+render_header()
 st.title("🏙 Smart City Comparison")
 
 df = pd.DataFrame({

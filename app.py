@@ -32,15 +32,7 @@ st.sidebar.markdown("""
 
 🎯 AI Confidence : 98%
 
-### Monitoring
 
-✅ Flood Prediction
-✅ Weather Intelligence
-✅ AQI Monitoring
-✅ Energy Forecasting
-✅ City Digital Twin
-✅ AI Decision Support
-""")
 
 # Welcome Section
 st.markdown("""

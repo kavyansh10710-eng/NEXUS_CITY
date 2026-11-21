@@ -38,23 +38,10 @@ st.subheader("Detect → Predict → Decide")
 st.sidebar.markdown("""
 # 🤖 NEXUS AI
 
-Status : 🟢 Online
+Status :  Online
 
 AI Confidence : 98%
 
-Monitoring:
-
-✅ Flood Prediction
-
-✅ Weather Intelligence
-
-✅ AQI Monitoring
-
-✅ Energy Forecasting
-
-✅ City Digital Twin
-
-✅ AI Decision Support
 """)
 
 st.markdown("""

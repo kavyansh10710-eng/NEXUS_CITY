@@ -2,6 +2,7 @@ import streamlit as st
 from logo import show_logo
 
 # Page Config
+show_logo()
 st.set_page_config(
     page_title="NEXUS ∞",
     page_icon="🌍",

@@ -192,7 +192,34 @@ body {
     margin: 28px auto;
   }
 }
+# LIGHT MODE COLORS
 
+if light_mode:
+    st.markdown("""
+    <style>
+    :root {
+        --bg: #F4F7FC;
+        --surface: #FFFFFF;
+        --surface-2: #EAF0FA;
+        --text: #111827;
+        --muted: #64748B;
+        --primary: #087EFF;
+        --secondary: #6846D9;
+        --border: rgba(30,60,100,.13);
+        --shadow: 0 12px 35px rgba(30,60,100,.09);
+    }
+
+    [data-testid="stAppViewContainer"] {
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    [data-testid="stSidebar"] {
+        background: var(--surface);
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
 ::selection {
   background: var(--primary);
   color: #07101C;

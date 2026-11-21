@@ -1,8 +1,6 @@
 
 import streamlit as st
-st.error(
-"🔴 NEXUS COMMAND CENTER ACTIVE"
-)
+
 st.title("🖥 City Command Center")
 st.success(
 "🛰 542 Sensors Online"

@@ -53,7 +53,7 @@ st.plotly_chart(
 )
 st.success(
 """
-📈 Comparative Smart City Analytics
+📈 Comparative City Analytics
 
 ✓ Infrastructure Risk
 

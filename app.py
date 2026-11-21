@@ -1,6 +1,6 @@
 import streamlit as st
 from logo import show_logo
-from theme import apply_theme
+
 # Page Setup
 st.set_page_config(
     page_title="NEXUS ∞",

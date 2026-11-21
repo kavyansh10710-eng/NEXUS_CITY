@@ -7,6 +7,12 @@ st.set_page_config(
     layout="wide",
     page_icon="🌍"
 )
+# NEXUS INFINITY THEME SWITCHER
+
+light_mode = st.sidebar.toggle(
+    "☀️ Light Mode",
+    value=False
+)
 
 # CSS Load
 with open("assets/style.css") as f:

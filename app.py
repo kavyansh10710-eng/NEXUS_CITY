@@ -31,7 +31,7 @@ st.sidebar.markdown("""
 🟢 Status : Online
 
 🎯 AI Confidence : 98%
-
+""")
 
 
 # Welcome Section

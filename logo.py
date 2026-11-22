@@ -3,6 +3,10 @@ import streamlit as st
 def show_logo():
     st.markdown("""
     <h1 style='text-align:center;color:#00D4FF;font-size:70px;'>
+        st.image(
+    "assets/favicon.png",
+    width=250
+     )
     NEXUS ∞ City
     </h1>
     st.image(

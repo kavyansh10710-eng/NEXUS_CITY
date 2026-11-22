@@ -2,10 +2,16 @@ import streamlit as st
 from logo import show_logo
 
 # Page Setup
+import streamlit as st
+
 st.set_page_config(
-    page_title="NEXUS ∞",
-    layout="wide",
-    page_icon="🌍"
+    page_title="NEXUS ∞ Smart City AI",
+    page_icon="assets/favicon.png",
+    layout="wide"
+)
+st.image(
+    "assets/favicon.png",
+    width=250
 )
 # NEXUS INFINITY THEME SWITCHER
 

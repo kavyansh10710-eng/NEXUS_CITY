@@ -38,7 +38,7 @@ st.sidebar.markdown("""
 st.markdown("""
 ### Welcome to NEXUS CITY
 
-NEXUS is an AI-Powered Smart City Digital Twin Platform.
+NEXUS is an AI-Powered Digital Platform.
 
 ✅ Flood Prediction
 

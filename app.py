@@ -11,7 +11,7 @@ st.set_page_config(
 )
 st.image(
     "assets/favicon.png",
-    width=200
+    width=50
 )
 
 # NEXUS INFINITY THEME SWITCHER

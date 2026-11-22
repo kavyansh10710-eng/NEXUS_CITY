@@ -9,6 +9,10 @@ st.set_page_config(
     page_icon="assets/favicon.png",
     layout="wide"
 )
+st.image(
+    "assets/favicon.png",
+    width=200
+)
 
 # NEXUS INFINITY THEME SWITCHER
 

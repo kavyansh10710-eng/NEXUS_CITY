@@ -9,10 +9,7 @@ st.set_page_config(
     page_icon="assets/favicon.png",
     layout="wide"
 )
-st.image(
-    "assets/favicon.png",
-    width=250
-)
+
 # NEXUS INFINITY THEME SWITCHER
 
 light_mode = st.sidebar.toggle(

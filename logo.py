@@ -7,6 +7,6 @@ def show_logo():
     </h1>
 
     <h3 style='text-align:center;color:#FFD700;'>
-    Smart City AI Digital Twin Platform
+    Smart City AI Platform
     </h3>
    """, unsafe_allow_html=True) 

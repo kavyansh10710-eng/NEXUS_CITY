@@ -4,7 +4,11 @@ from logo import show_logo
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
-
+st.set_page_config(
+    page_title="NEXUS ∞ Smart City AI",
+    page_icon="assets/favicon.png",
+    layout="wide"
+)
 
 # -----------------------------
 # LOAD CSS

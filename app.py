@@ -195,17 +195,3 @@ with c2:
 # -----------------------------
 st.markdown("---")
 
-st.markdown(
-    """
-    <center>
-    <h4 style="color:#00E5FF;">
-    NEXUS ∞ Smart City AI Platform
-    </h4>
-
-    <p>
-    AI • Analytics • Prediction • Simulation
-    </p>
-    </center>
-    """,
-    unsafe_allow_html=True
-)

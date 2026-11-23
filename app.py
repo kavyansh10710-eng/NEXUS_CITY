@@ -77,9 +77,7 @@ st.markdown("""
 NEXUS ∞ AI Future Simulator
 </h1>
 
-<h3 style="color:#7F5AF0;">
-Smart City Digital Twin Platform
-</h3>
+
 
 <p style="font-size:20px;">
 Detect → Predict → Decide

@@ -29,12 +29,6 @@ load_css()
 # SIDEBAR
 # -----------------------------
 st.sidebar.title("🤖 NEXUS ∞")
-
-light_mode = st.sidebar.toggle(
-    "☀️ Light Mode",
-    value=False
-)
-
 st.sidebar.markdown("---")
 
 st.sidebar.success("🟢 AI Core Online")

@@ -3,11 +3,20 @@ import pandas as pd
 import folium
 from streamlit_folium import st_folium
 
-st.set_page_config(page_title="NEXUS ∞ City Map", layout="wide")
+# --------------------------------------------------
+# PAGE CONFIG
+# --------------------------------------------------
+st.set_page_config(
+    page_title="NEXUS ∞ City Map",
+    page_icon="🌍",
+    layout="wide"
+)
 
-st.title("🗺️ NEXUS ∞ India Smart City Map")
+st.title("🛰️ NEXUS ∞ India Smart City Satellite Map")
 
-# Major Indian Cities Dataset
+# --------------------------------------------------
+# CITIES DATA
+# --------------------------------------------------
 cities = [
     ["Ahmedabad", 23.0225, 72.5714],
     ["Surat", 21.1702, 72.8311],
@@ -41,59 +50,111 @@ cities = [
     ["Guwahati", 26.1445, 91.7362]
 ]
 
-df = pd.DataFrame(cities, columns=["City", "Latitude", "Longitude"])
-
-# Search City
-selected_city = st.selectbox(
-    "🔍 Search City",
-    options=["All Cities"] + df["City"].tolist()
+df = pd.DataFrame(
+    cities,
+    columns=["City", "Latitude", "Longitude"]
 )
 
-# Create Map
+# --------------------------------------------------
+# SEARCH
+# --------------------------------------------------
+selected_city = st.selectbox(
+    "🔍 Search City",
+    ["All Cities"] + df["City"].tolist()
+)
+
 if selected_city == "All Cities":
     map_center = [22.5937, 78.9629]
     zoom = 5
 else:
-    row = df[df["City"] == selected_city].iloc[0]
-    map_center = [row["Latitude"], row["Longitude"]]
+    city_data = df[df["City"] == selected_city].iloc[0]
+    map_center = [
+        city_data["Latitude"],
+        city_data["Longitude"]
+    ]
     zoom = 10
 
+# --------------------------------------------------
+# SATELLITE MAP
+# --------------------------------------------------
 m = folium.Map(
     location=map_center,
     zoom_start=zoom,
-    tiles="CartoDB Positron"
+    tiles=None,
+    control_scale=True
 )
 
-# Add Markers
+# Satellite Layer
+folium.TileLayer(
+    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attr="Esri",
+    name="Satellite",
+    overlay=False,
+    control=True
+).add_to(m)
+
+# Labels Layer
+folium.TileLayer(
+    tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+    attr="Esri",
+    name="Labels",
+    overlay=True,
+    control=True
+).add_to(m)
+
+# --------------------------------------------------
+# CITY MARKERS
+# --------------------------------------------------
 for _, row in df.iterrows():
 
     popup_html = f"""
-    <div style='width:200px'>
-        <h4>🏙️ {row['City']}</h4>
-        <hr>
-        📍 Latitude: {row['Latitude']}<br>
-        📍 Longitude: {row['Longitude']}<br><br>
+    <div style="width:220px;
+                font-family:Arial;
+                padding:5px;">
+        <h3 style="color:#00ffff;">
+        🏙️ {row['City']}
+        </h3>
 
-        🤖 NEXUS AI Status:<br>
-        ✅ Active Monitoring
+        <hr>
+
+        <b>Latitude:</b> {row['Latitude']}<br>
+        <b>Longitude:</b> {row['Longitude']}<br><br>
+
+        🤖 <b>NEXUS AI Status</b><br>
+        ✅ Active Monitoring<br>
+        🛰️ Satellite Tracking<br>
+        🌍 Smart City Node
     </div>
     """
 
-    folium.Marker(
+    folium.CircleMarker(
         location=[row["Latitude"], row["Longitude"]],
-        popup=folium.Popup(popup_html, max_width=250),
+        radius=8,
+        popup=folium.Popup(
+            popup_html,
+            max_width=300
+        ),
         tooltip=row["City"],
-        icon=folium.Icon(
-            color="blue",
-            icon="info-sign"
-        )
+        color="#00FFFF",
+        fill=True,
+        fill_color="#00FFFF",
+        fill_opacity=0.9,
+        weight=2
     ).add_to(m)
 
-# Display Map
+# Layer Control
+folium.LayerControl().add_to(m)
+
+# --------------------------------------------------
+# DISPLAY MAP
+# --------------------------------------------------
 st_folium(
     m,
     width=None,
-    height=700
+    height=750,
+    returned_objects=[]
 )
 
-st.success(f"✅ Monitoring {len(df)} Major Indian Cities")
+st.success(
+    f"✅ Monitoring {len(df)} Major Indian Cities"
+)

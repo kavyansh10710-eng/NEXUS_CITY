@@ -76,9 +76,6 @@ st.markdown("""
 <h1 style="color:#00E5FF;">
 NEXUS ∞ AI Future Simulator
 </h1>
-
-
-
 <p style="font-size:20px;">
 Detect → Predict → Decide
 </p>

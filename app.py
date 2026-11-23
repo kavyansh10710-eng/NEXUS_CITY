@@ -56,8 +56,6 @@ st.sidebar.markdown("""
 
 🌫️ AQI Monitoring
 
-⚡ Energy Forecast
-
 🏙️ Smart City Twin
 """)
 

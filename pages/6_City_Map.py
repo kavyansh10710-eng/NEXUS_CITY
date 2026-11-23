@@ -1,235 +1,99 @@
 import streamlit as st
+import pandas as pd
 import folium
 from streamlit_folium import st_folium
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="NEXUS ∞ City Map", layout="wide")
 
-st.title("🛰️ City Map")
+st.title("🗺️ NEXUS ∞ India Smart City Map")
 
-# ==========================
-# CITY DATA
-# ==========================
+# Major Indian Cities Dataset
+cities = [
+    ["Ahmedabad", 23.0225, 72.5714],
+    ["Surat", 21.1702, 72.8311],
+    ["Vadodara", 22.3072, 73.1812],
+    ["Rajkot", 22.3039, 70.8022],
+    ["Mumbai", 19.0760, 72.8777],
+    ["Pune", 18.5204, 73.8567],
+    ["Nagpur", 21.1458, 79.0882],
+    ["Delhi", 28.6139, 77.2090],
+    ["Noida", 28.5355, 77.3910],
+    ["Gurugram", 28.4595, 77.0266],
+    ["Bengaluru", 12.9716, 77.5946],
+    ["Mysuru", 12.2958, 76.6394],
+    ["Chennai", 13.0827, 80.2707],
+    ["Coimbatore", 11.0168, 76.9558],
+    ["Hyderabad", 17.3850, 78.4867],
+    ["Visakhapatnam", 17.6868, 83.2185],
+    ["Kolkata", 22.5726, 88.3639],
+    ["Bhubaneswar", 20.2961, 85.8245],
+    ["Jaipur", 26.9124, 75.7873],
+    ["Lucknow", 26.8467, 80.9462],
+    ["Kanpur", 26.4499, 80.3319],
+    ["Chandigarh", 30.7333, 76.7794],
+    ["Bhopal", 23.2599, 77.4126],
+    ["Indore", 22.7196, 75.8577],
+    ["Patna", 25.5941, 85.1376],
+    ["Ranchi", 23.3441, 85.3096],
+    ["Kochi", 9.9312, 76.2673],
+    ["Thiruvananthapuram", 8.5241, 76.9366],
+    ["Srinagar", 34.0837, 74.7973],
+    ["Guwahati", 26.1445, 91.7362]
+]
 
-cities = {
-    "Navsari (Gujarat)": {
-        "lat": 20.9467,
-        "lon": 72.9520,
-        "flood": 25,
-        "aqi": 70,
-        "temp": 31
-    },
-    "Ahmedabad (Gujarat)": {
-        "lat": 23.0225,
-        "lon": 72.5714,
-        "flood": 40,
-        "aqi": 120,
-        "temp": 37
-    },
-    "Mumbai (Maharashtra)": {
-        "lat": 19.0760,
-        "lon": 72.8777,
-        "flood": 75,
-        "aqi": 95,
-        "temp": 33
-    },
-    "Bombay (Maharashtra)": {
-        "lat": 19.0760,
-        "lon": 72.8777,
-        "flood": 75,
-        "aqi": 95,
-        "temp": 33
-    }
-}
+df = pd.DataFrame(cities, columns=["City", "Latitude", "Longitude"])
 
-# ==========================
-# CITY SELECTOR
-# ==========================
-
-city = st.selectbox(
-    "🏙️ Select City",
-    list(cities.keys())
+# Search City
+selected_city = st.selectbox(
+    "🔍 Search City",
+    options=["All Cities"] + df["City"].tolist()
 )
 
-data = cities[city]
-
-lat = data["lat"]
-lon = data["lon"]
-
-# ==========================
-# SIDEBAR SIMULATION
-# ==========================
-
-st.sidebar.title("⚙️ Future Simulation")
-
-rainfall_change = st.sidebar.slider(
-    "🌧 Rainfall Increase (%)",
-    0, 100, 20
-)
-
-population_growth = st.sidebar.slider(
-    "👥 Population Growth (%)",
-    0, 100, 15
-)
-
-temp_change = st.sidebar.slider(
-    "🔥 Temperature Rise (°C)",
-    0, 10, 2
-)
-
-# ==========================
-# AI RISK SCORE
-# ==========================
-
-risk_score = (
-    data["flood"]
-    + rainfall_change * 0.3
-    + population_growth * 0.2
-    + temp_change * 2
-)
-
-risk_score = min(round(risk_score), 100)
-
-# ==========================
-# RISK COLOR
-# ==========================
-
-if risk_score >= 70:
-    zone_color = "red"
-elif risk_score >= 40:
-    zone_color = "orange"
+# Create Map
+if selected_city == "All Cities":
+    map_center = [22.5937, 78.9629]
+    zoom = 5
 else:
-    zone_color = "green"
-
-# ==========================
-# CREATE MAP
-# ==========================
+    row = df[df["City"] == selected_city].iloc[0]
+    map_center = [row["Latitude"], row["Longitude"]]
+    zoom = 10
 
 m = folium.Map(
-    location=[lat, lon],
-    zoom_start=12,
-    tiles=None
+    location=map_center,
+    zoom_start=zoom,
+    tiles="CartoDB Positron"
 )
 
-# ==========================
-# SATELLITE VIEW
-# ==========================
+# Add Markers
+for _, row in df.iterrows():
 
-folium.TileLayer(
-    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri Satellite",
-    name="Satellite"
-).add_to(m)
+    popup_html = f"""
+    <div style='width:200px'>
+        <h4>🏙️ {row['City']}</h4>
+        <hr>
+        📍 Latitude: {row['Latitude']}<br>
+        📍 Longitude: {row['Longitude']}<br><br>
 
-# ==========================
-# CITY MARKER
-# ==========================
+        🤖 NEXUS AI Status:<br>
+        ✅ Active Monitoring
+    </div>
+    """
 
-folium.CircleMarker(
-    location=[lat, lon],
-    radius=10,
-    popup=city,
-    tooltip=city,
-    color=zone_color,
-    fill=True,
-    fill_color=zone_color,
-    fill_opacity=1
-).add_to(m)
+    folium.Marker(
+        location=[row["Latitude"], row["Longitude"]],
+        popup=folium.Popup(popup_html, max_width=250),
+        tooltip=row["City"],
+        icon=folium.Icon(
+            color="blue",
+            icon="info-sign"
+        )
+    ).add_to(m)
 
-# ==========================
-# RISK ZONE
-# ==========================
-
-folium.Circle(
-    location=[lat, lon],
-    radius=3000,
-    color=zone_color,
-    fill=True,
-    fill_color=zone_color,
-    fill_opacity=0.20,
-    popup=f"Risk Score: {risk_score}%"
-).add_to(m)
-
-# ==========================
-# MAP DISPLAY
-# ==========================
-
+# Display Map
 st_folium(
     m,
-    width=1500,
-    height=750,
-    returned_objects=[]
+    width=None,
+    height=700
 )
 
-# ==========================
-# CITY METRICS
-# ==========================
-
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    st.metric(
-        "🌊 Flood Risk",
-        f"{data['flood']}%"
-    )
-
-with col2:
-    st.metric(
-        "🌫 AQI",
-        data["aqi"]
-    )
-
-with col3:
-    st.metric(
-        "🌡 Temperature",
-        f"{data['temp']}°C"
-    )
-
-with col4:
-    st.metric(
-        "🚨 AI Risk Score",
-        f"{risk_score}%"
-    )
-
-# ==========================
-# AI RECOMMENDATION
-# ==========================
-
-st.subheader("🤖 AI Recommendation")
-
-if risk_score >= 70:
-
-    st.error("""
-🔴 HIGH RISK
-
-✅ Expand Water Reservoir
-
-✅ Improve Drainage
-
-✅ Activate Emergency Teams
-
-✅ Continuous Monitoring
-""")
-
-elif risk_score >= 40:
-
-    st.warning("""
-🟠 MEDIUM RISK
-
-✅ Monitor Environment
-
-✅ Upgrade Infrastructure
-
-✅ Prepare Backup Resources
-""")
-
-else:
-
-    st.success("""
-🟢 LOW RISK
-
-✅ Stable Conditions
-
-✅ Continue Monitoring
-
-✅ Maintain Smart Infrastructure
-""")
+st.success(f"✅ Monitoring {len(df)} Major Indian Cities")

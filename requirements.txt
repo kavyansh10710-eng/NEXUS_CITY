@@ -15,3 +15,9 @@ numpy
 reportlab
 streamlit-autorefresh
 requests
+streamlit
+pandas
+folium
+streamlit-folium
+requests
+streamlit-autorefresh

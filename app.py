@@ -72,7 +72,7 @@ show_logo()
 # HERO SECTION
 # -----------------------------
 st.markdown("""
-<div style="text-align:center;padding:20px;">
+<div style="text-align:center;padding:30px;">
 <h1 style="color:#00E5FF;">
 NEXUS ∞ AI Future Simulator
 </h1>

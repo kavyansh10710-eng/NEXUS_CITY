@@ -160,30 +160,20 @@ st.markdown("## 🧠 Core AI Modules")
 c1, c2 = st.columns(2)
 
 with c1:
-    st.info("""
-    🌊 Flood Prediction Engine
+    st.markdown("""
+<div class="ai-card">
 
-    • Rainfall Analysis
+<h3>🌊 Flood Prediction Engine</h3>
 
-    • River Level Monitoring
+• Rainfall Analysis<br>
+• River Level Monitoring<br>
+• Risk Score Generation<br>
+• Early Warning Alerts
 
-    • Risk Score Generation
+</div>
+""", unsafe_allow_html=True)
 
-    • Early Warning Alerts
-    """)
 
-with c2:
-    st.info("""
-    🌫️ Environment Intelligence
-
-    • AQI Prediction
-
-    • Pollution Detection
-
-    • Heatwave Forecast
-
-    • Weather Analytics
-    """)
 
 # -----------------------------
 # FOOTER

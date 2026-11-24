@@ -1,5 +1,15 @@
 import streamlit as st
 
+import streamlit as st
+
+def apply_theme():
+
+    with open("assets/style.css") as f:
+        st.markdown(
+            f"<style>{f.read()}</style>",
+            unsafe_allow_html=True
+        )
+
 def apply_theme():
     st.markdown("""
     <style>

@@ -15,8 +15,13 @@ from streamlit_autorefresh import st_autorefresh
 # PAGE CONFIG
 # =========================
 
+from PIL import Image
+
+favicon = Image.open("assets/favicon.png")
+
 st.set_page_config(
     page_title="NEXUS ∞ Smart City Map",
+    page_icon=favicon,
     layout="wide"
 )
 

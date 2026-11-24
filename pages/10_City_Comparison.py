@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
 import streamlit as st
+
+from assets.theme import apply_theme
+
+apply_theme()
 
 def apply_theme():
 

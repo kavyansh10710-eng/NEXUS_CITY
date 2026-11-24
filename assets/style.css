@@ -72,3 +72,14 @@ h1,h2,h3 {
 div[data-testid="metric-container"] {
     animation: glow 3s infinite;
 }
+.ai-card{
+    background: rgba(10,20,40,0.80);
+    border:1px solid #00E5FF;
+    border-radius:20px;
+    padding:20px;
+    color:#D4AF37;
+
+    box-shadow:
+    0 0 10px #00E5FF,
+    0 0 20px rgba(0,229,255,.3);
+}

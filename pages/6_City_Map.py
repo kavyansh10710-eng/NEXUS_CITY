@@ -25,7 +25,7 @@ st.set_page_config(
 # OPENWEATHER API KEY
 # =========================
 
-API_KEY = "MY_API_KEY"
+API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
 
 # =========================
 # AUTO REFRESH (5 MIN)

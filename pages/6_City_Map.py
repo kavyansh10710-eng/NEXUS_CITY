@@ -44,7 +44,7 @@ st_autorefresh(
 # TITLE
 # =========================
 
-st.title("🛰️ NEXUS ∞ Smart City Command Center")
+st.title("🛰️ NEXUS ∞ Smart City Map")
 
 st.info(
     "🌡️ Live Weather • 🌧️ Rainfall • 💨 Wind • 🫁 AQI • 🔄 Refresh Every 5 Minutes"

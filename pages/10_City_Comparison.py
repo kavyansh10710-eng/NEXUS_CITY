@@ -2,6 +2,16 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+import streamlit as st
+
+def apply_theme():
+
+    with open("assets/style.css") as f:
+        st.markdown(
+            f"<style>{f.read()}</style>",
+            unsafe_allow_html=True
+        )
+
 st.title("🏙 Smart City Comparison")
 
 df = pd.DataFrame({

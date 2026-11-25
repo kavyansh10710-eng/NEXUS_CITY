@@ -1,6 +1,9 @@
 import streamlit as st
 import requests
 from streamlit_autorefresh import st_autorefresh
+from assets.theme import apply_theme
+
+apply_theme()
 
 st.title("☁️ Weather Intelligence Center")
 

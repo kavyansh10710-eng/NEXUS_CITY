@@ -1,7 +1,9 @@
 import streamlit as st
-import randomfrom assets.theme import apply_theme
+import randomfrom 
+from assets.theme import apply_theme
 
 apply_theme()
+
 
 
 st.title("🤖 AI Prediction Engine")

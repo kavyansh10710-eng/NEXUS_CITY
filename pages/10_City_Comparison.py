@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-
 from assets.theme import apply_theme
 
 # Theme
+
 apply_theme()
 
 # Title

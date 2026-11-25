@@ -1,6 +1,8 @@
 import streamlit as st
 from logo import show_logo
 from assets.theme import apply_theme
+import streamlit as st
+import requests
 
 # -----------------------------
 # PAGE CONFIG
@@ -53,6 +55,66 @@ apply_theme()
 show_logo()
 
 # -----------------------------
+# VANSDA LIVE WEATHER
+# -----------------------------
+
+API_KEY = "MY_API_KEY"   # અહીં તમારી OpenWeather API Key મૂકો
+
+LAT = 20.758
+LON = 73.367
+
+try:
+
+    weather_url = (
+        f"https://api.openweathermap.org/data/2.5/weather?"
+        f"lat={LAT}"
+        f"&lon={LON}"
+        f"&appid={API_KEY}"
+        f"&units=metric"
+    )
+
+    weather_data = requests.get(
+        weather_url,
+        timeout=10
+    ).json()
+
+    temp = round(
+        weather_data["main"]["temp"]
+    )
+    # AQI API
+
+aqi_url = (
+    f"https://api.openweathermap.org/data/2.5/air_pollution?"
+    f"lat={LAT}"
+    f"&lon={LON}"
+    f"&appid={API_KEY}"
+    )
+
+    aqi_data = requests.get(
+    aqi_url,
+    timeout=10
+    ).json()
+
+    aqi = aqi_data["list"][0]["main"]["aqi"]
+
+    humidity = weather_data["main"]["humidity"]
+
+    weather = weather_data["weather"][0]["main"]
+
+    wind = round(
+        weather_data["wind"]["speed"],
+        1
+    )
+
+except:
+
+    temp = "N/A"
+    humidity = "N/A"
+    weather = "N/A"
+    wind = "N/A"
+    aqi = "N/A"
+
+# -----------------------------
 # HERO SECTION
 # -----------------------------
 st.markdown("""
@@ -76,38 +138,51 @@ st.image(
 )
 
 # -----------------------------
-# DASHBOARD CARDS
+# LIVE WEATHER CARDS
 # -----------------------------
-col1, col2, col3, col4 = st.columns(4)
+
+col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
     st.metric(
-        "🌦️ Temperature",
-        "34°C",
-        "+2°C"
+        "🌡️ Temperature",
+        f"{temp}°C"
     )
 
 with col2:
     st.metric(
-        "🌊 Flood Risk",
-        "Medium",
-        "+5%"
+        "💧 Humidity",
+        f"{humidity}%"
     )
 
 with col3:
     st.metric(
-        "🌫️ AQI",
-        "78",
-        "-3"
+        "☁️ Weather",
+        weather
     )
 
 with col4:
     st.metric(
-        "⚡ Energy Demand",
-        "82%",
-        "+7%"
+        "🌬️ Wind",
+        f"{wind} m/s"
     )
 
+with col5:
+
+    aqi_text = {
+        1: "Good",
+        2: "Fair",
+        3: "Moderate",
+        4: "Poor",
+        5: "Very Poor"
+    }
+
+    st.metric(
+        "🌫️ AQI",
+        aqi_text.get(aqi, "N/A")
+    )
+
+st.caption("📍 Vansda, Navsari, Gujarat | Live Weather & AQI")
 # -----------------------------
 # MAIN CONTENT
 # -----------------------------

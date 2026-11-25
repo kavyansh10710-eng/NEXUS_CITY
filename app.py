@@ -78,33 +78,25 @@ try:
         timeout=10
     ).json()
 
-    temp = round(
-        weather_data["main"]["temp"]
-    )
-    # AQI API
+    temp = round(weather_data["main"]["temp"])
+    humidity = weather_data["main"]["humidity"]
+    weather = weather_data["weather"][0]["main"]
+    wind = round(weather_data["wind"]["speed"], 1)
 
-aqi_url = (
-    f"https://api.openweathermap.org/data/2.5/air_pollution?"
-    f"lat={LAT}"
-    f"&lon={LON}"
-    f"&appid={API_KEY}"
+    # AQI DATA
+    aqi_url = (
+        f"https://api.openweathermap.org/data/2.5/air_pollution?"
+        f"lat={LAT}"
+        f"&lon={LON}"
+        f"&appid={API_KEY}"
     )
 
     aqi_data = requests.get(
-    aqi_url,
-    timeout=10
+        aqi_url,
+        timeout=10
     ).json()
 
     aqi = aqi_data["list"][0]["main"]["aqi"]
-
-    humidity = weather_data["main"]["humidity"]
-
-    weather = weather_data["weather"][0]["main"]
-
-    wind = round(
-        weather_data["wind"]["speed"],
-        1
-    )
 
 except:
 
@@ -113,7 +105,6 @@ except:
     weather = "N/A"
     wind = "N/A"
     aqi = "N/A"
-
 # -----------------------------
 # HERO SECTION
 # -----------------------------
@@ -169,7 +160,7 @@ with col4:
 
 with col5:
 
-    aqi_text = {
+    aqi_status = {
         1: "Good",
         2: "Fair",
         3: "Moderate",
@@ -179,10 +170,10 @@ with col5:
 
     st.metric(
         "🌫️ AQI",
-        aqi_text.get(aqi, "N/A")
+        aqi_status.get(aqi, "N/A")
     )
 
-st.caption("📍 Vansda, Navsari, Gujarat | Live Weather & AQI")
+st.caption("📍 Vansda, Navsari, Gujarat")
 # -----------------------------
 # MAIN CONTENT
 # -----------------------------

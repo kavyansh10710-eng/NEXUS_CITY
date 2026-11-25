@@ -1,5 +1,8 @@
 import streamlit as st
 import plotly.graph_objects as go
+from assets.theme import apply_theme
+
+apply_theme()
 
 st.title("🌫 Air Quality Intelligence")
 

@@ -10,8 +10,6 @@ st.set_page_config(
     page_icon="assets/favicon.png",
     layout="wide"
 )
-
-
 # -----------------------------
 # LOAD CSS
 # -----------------------------
@@ -62,7 +60,7 @@ st.sidebar.markdown("""
 """)
 
 # -----------------------------
-# LOGO
+# LOGO & Theam
 # -----------------------------
 apply_theme()
 

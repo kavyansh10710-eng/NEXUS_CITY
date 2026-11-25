@@ -4,6 +4,7 @@ import plotly.express as px
 import requests
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
+from assets.theme import apply_theme
 
 # ======================
 # PAGE CONFIG
@@ -13,6 +14,8 @@ st.set_page_config(
     page_title="NEXUS Live Analytics",
     layout="wide"
 )
+
+apply_theme()
 
 st.title("📊 NEXUS Live Analytics Center")
 

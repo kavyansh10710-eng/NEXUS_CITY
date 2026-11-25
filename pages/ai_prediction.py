@@ -1,5 +1,5 @@
 import streamlit as st
-import randomfrom 
+import random
 from assets.theme import apply_theme
 
 apply_theme()

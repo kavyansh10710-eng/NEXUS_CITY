@@ -120,13 +120,9 @@ NEXUS is an advanced Decision Intelligence Platform.
 
 ✅ Flood Prediction
 
-✅ Heatwave Forecasting
-
 ✅ Air Quality Monitoring
 
 ✅ Weather Intelligence
-
-✅ Energy Consumption Analytics
 
 ✅ Explainable AI
 

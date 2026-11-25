@@ -43,21 +43,7 @@ st.sidebar.metric(
     "94%"
 )
 
-st.sidebar.markdown("---")
 
-st.sidebar.markdown("""
-### Active Modules
-
-🌦️ Weather AI
-
-🌊 Flood Prediction
-
-🔥 Heatwave Analysis
-
-🌫️ AQI Monitoring
-
-🏙️ Smart City Twin
-""")
 
 # -----------------------------
 # LOGO & Theam

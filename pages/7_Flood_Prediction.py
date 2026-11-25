@@ -71,69 +71,102 @@ st.metric(
 st.progress(risk)
 
 # ========================================
-# RISK ALERT
+# RISK ALERT + RECOMMENDATIONS
 # ========================================
 
 if risk > 70:
 
-    st.markdown(
-        f"""
-        <div style="
-        background:rgba(255,0,0,0.15);
-        border:2px solid #ff4d4d;
-        padding:20px;
-        border-radius:16px;
-        backdrop-filter:blur(12px);
-        text-align:center;
-        ">
-            <h2 style="color:#ff4d4d;">
-            🚨 HIGH FLOOD RISK
-            </h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div style="
+    background:rgba(255,0,0,0.15);
+    border:2px solid #ff4d4d;
+    padding:20px;
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+    ">
+
+    <h2 style="color:#ff4d4d;">
+    🚨 HIGH FLOOD RISK
+    </h2>
+
+    <h4 style="color:white;">
+    🛑 Recommended Actions
+    </h4>
+
+    ✅ Move to higher ground<br>
+    ✅ Keep emergency kit ready<br>
+    ✅ Follow official alerts<br>
+    ✅ Avoid flooded roads<br>
+    ✅ Keep mobile phones charged
+
+    </div>
+    """, unsafe_allow_html=True)
 
 elif risk > 40:
 
-    st.markdown(
-        f"""
-        <div style="
-        background:rgba(255,165,0,0.15);
-        border:2px solid #ffb347;
-        padding:20px;
-        border-radius:16px;
-        backdrop-filter:blur(12px);
-        text-align:center;
-        ">
-            <h2 style="color:#ffb347;">
-            ⚠️ MEDIUM FLOOD RISK
-            </h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div style="
+    background:rgba(255,165,0,0.15);
+    border:2px solid #ffb347;
+    padding:20px;
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+    ">
+
+    <h2 style="color:#ffb347;">
+    ⚠️ MEDIUM FLOOD RISK
+    </h2>
+
+    <h4 style="color:white;">
+    📋 Recommended Actions
+    </h4>
+
+    ✅ Monitor weather updates<br>
+    ✅ Prepare emergency contacts<br>
+    ✅ Check local drainage conditions<br>
+    ✅ Avoid unnecessary travel
+
+    </div>
+    """, unsafe_allow_html=True)
 
 else:
 
-    st.markdown(
-        f"""
-        <div style="
-        background:rgba(0,255,127,0.15);
-        border:2px solid #00ff99;
-        padding:20px;
-        border-radius:16px;
-        backdrop-filter:blur(12px);
-        text-align:center;
-        ">
-            <h2 style="color:#00ff99;">
-            ✅ LOW FLOOD RISK
-            </h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    <div style="
+    background:rgba(0,255,127,0.15);
+    border:2px solid #00ff99;
+    padding:20px;
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+    ">
 
+    <h2 style="color:#00ff99;">
+    ✅ LOW FLOOD RISK
+    </h2>
+
+    <h4 style="color:white;">
+    👍 Recommended Actions
+    </h4>
+
+    ✅ Normal activities can continue<br>
+    ✅ Stay aware of weather forecasts<br>
+    ✅ Keep emergency supplies updated<br>
+    ✅ No immediate action required
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    st.markdown(f"""
+    ### 🤖 NEXUS AI Advisory
+
+    Current Flood Risk Score: **{risk}%**
+
+    The prediction is based on rainfall, river level and soil moisture conditions.
+
+    Please continue monitoring local weather conditions and emergency alerts.
+    """)
 # ========================================
 # CHART DATA
 # ========================================

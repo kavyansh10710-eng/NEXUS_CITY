@@ -58,7 +58,7 @@ show_logo()
 # VANSDA LIVE WEATHER
 # -----------------------------
 
-API_KEY = "MY_API_KEY"   # અહીં તમારી OpenWeather API Key મૂકો
+API_KEY = "98d6296f124a940e6ac58e28bbf3625f"   # અહીં તમારી OpenWeather API Key મૂકો
 
 LAT = 20.758
 LON = 73.367

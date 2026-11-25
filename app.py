@@ -11,7 +11,6 @@ st.set_page_config(
     layout="wide"
 )
 
-apply_theme()
 
 # -----------------------------
 # LOAD CSS
@@ -65,6 +64,8 @@ st.sidebar.markdown("""
 # -----------------------------
 # LOGO
 # -----------------------------
+apply_theme()
+
 show_logo()
 
 # -----------------------------

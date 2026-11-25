@@ -1,13 +1,21 @@
 /* Background */
 
 .stApp {
-    background: linear-gradient(
-        135deg,
-        #050816,
-        #0B1026,
-        #12003A
-    );
-    color: white;
+
+    background:
+    linear-gradient(
+        rgba(5, 8, 22, 0.80),
+        rgba(5, 8, 22, 0.80)
+    ),
+    url("app/static/background.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
 }
 
 /* Sidebar */

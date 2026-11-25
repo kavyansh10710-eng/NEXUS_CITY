@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from assets.theme import apply_theme
+
+apply_theme()
 
 st.title("🌊 Flood Prediction Center")
 

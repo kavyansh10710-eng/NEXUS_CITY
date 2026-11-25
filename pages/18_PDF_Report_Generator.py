@@ -3,6 +3,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from io import BytesIO
 from datetime import datetime
+from assets.theme import apply_theme
+
+apply_theme()
 
 st.title("📄 NEXUS AI PDF Report Generator")
 

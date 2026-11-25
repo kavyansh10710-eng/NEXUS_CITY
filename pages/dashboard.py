@@ -1,4 +1,7 @@
 import streamlit as st
+from assets.theme import apply_theme
+
+apply_theme()
 
 st.title("📊 Smart City Dashboard")
 

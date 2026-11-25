@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
+from assets.theme import apply_theme
 
 st.title("📑 AI Report Generator")
+
+apply_theme()
 
 city = st.selectbox(
     "Select City",

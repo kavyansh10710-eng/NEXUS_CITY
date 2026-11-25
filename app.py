@@ -2,8 +2,6 @@ import streamlit as st
 from logo import show_logo
 from assets.theme import apply_theme
 
-apply_theme()
-
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
@@ -12,6 +10,8 @@ st.set_page_config(
     page_icon="assets/favicon.png",
     layout="wide"
 )
+
+apply_theme()
 
 # -----------------------------
 # LOAD CSS

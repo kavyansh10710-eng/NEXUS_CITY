@@ -151,7 +151,7 @@ def get_weather_data(lat, lon):
         }
     except:
         return None
-        def get_aqi_status(aqi):
+       def get_aqi_status(aqi):
 
             if aqi <= 12:
                 return "🟢 Good"

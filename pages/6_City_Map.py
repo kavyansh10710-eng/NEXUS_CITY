@@ -153,23 +153,23 @@ def get_weather_data(lat, lon):
         return None
         def get_aqi_status(aqi):
 
-    if aqi <= 12:
-        return "🟢 Good"
+            if aqi <= 12:
+                return "🟢 Good"
 
-    elif aqi <= 35:
-        return "🟡 Moderate"
+            elif aqi <= 35:
+                return "🟡 Moderate"
 
-    elif aqi <= 55:
-        return "🟠 Unhealthy"
+            elif aqi <= 55:
+                return "🟠 Unhealthy"
 
-    elif aqi <= 150:
-        return "🔴 Poor"
+            elif aqi <= 150:
+                return "🔴 Poor"
 
-    elif aqi <= 250:
-        return "🟣 Very Poor"
+            elif aqi <= 250:
+                return "🟣 Very Poor"
 
-    else:
-        return "⚫ Hazardous"
+            else:
+                return "⚫ Hazardous"
 
 # =========================
 # CITY SEARCH

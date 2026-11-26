@@ -181,7 +181,7 @@ st.markdown("## 🚀 Welcome to NEXUS ∞ ")
 st.markdown("""
 ### AI Powered Smart City Command Center
 
-NEXUS is an advanced Decision Intelligence Platform.
+NEXUS ∞ is an advanced Decision Intelligence Platform.
 
 ✅ Flood Prediction
 

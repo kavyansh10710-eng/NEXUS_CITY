@@ -353,7 +353,7 @@ else:
 
 st_folium(
     m,
-    use_container_width=True,
+    width="stretch",
     height=800
 )
 

@@ -1,84 +1,180 @@
-
 import streamlit as st
+import requests
+from datetime import datetime
 from assets.theme import apply_theme
 
 apply_theme()
 
-st.title("🖥 City Command Center")
-st.success(
-"🛰 542 Sensors Online"
-)
+st.title("🖥 Navsari City Command Center")
 
-st.success(
-"⚡ Power Grid Connected"
-)
+API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
 
-st.success(
-"☁ Weather Monitoring Active"
-)
-col1,col2,col3,col4 = st.columns(4)
+# નવસારી (Navsari) ના Latitude અને Longitude
+LAT = 20.95
+LON = 72.93
+
+@st.cache_data(ttl=600)
+def get_navsari_live_data():
+    headers = {"User-Agent": "Mozilla/5.0"}
+    # ડિફોલ્ટ વેલ્યુ (જો API માં કોઈ વિલંબ થાય તો)
+    data = {
+        "is_live": False,
+        "temp": 30,
+        "humidity": 60,
+        "rain": 0.0,
+        "aqi_text": "Moderate",
+        "flood_alert": "Low",
+        "power_demand": "75%",
+        "emergency": "Low",
+        "auto_situation": "Air Pollution",
+        "updated_time": datetime.now().strftime("%I:%M %p")
+    }
+    
+    try:
+        # 1. નવસારીનો લાઈવ વેધર ડેટા (OpenWeather)
+        w_resp = requests.get(
+            "https://openweathermap.org",
+            params={"lat": LAT, "lon": LON, "appid": API_KEY, "units": "metric"},
+            headers=headers,
+            timeout=10
+        )
+        
+        if w_resp.status_code == 200 and w_resp.text.strip():
+            w_json = w_resp.json()
+            temp = round(float(w_json["main"]["temp"]))
+            humidity = int(w_json["main"]["humidity"])
+            rain = float(w_json.get("rain", {}).get("1h", 0))
+            
+            data["temp"] = temp
+            data["humidity"] = humidity
+            data["rain"] = rain
+            data["is_live"] = True
+            
+            # વરસાદ અને ભેજ મુજબ Flood Alert નક્કી કરવું
+            if rain >= 10 or (rain > 2 and humidity > 85):
+                data["flood_alert"] = "High"
+            elif rain > 0 or humidity > 80:
+                data["flood_alert"] = "Medium"
+            else:
+                data["flood_alert"] = "Low"
+                
+            # તાપમાન મુજબ Power Demand (AC/પંખાના વપરાશ મુજબ) ગણતરી
+            calc_power = min(98, max(55, int(50 + (temp * 1.1))))
+            data["power_demand"] = f"{calc_power}%"
+            
+        # 2. નવસારીનો લાઈવ AQI ડેટા
+        a_resp = requests.get(
+            "https://openweathermap.org",
+            params={"lat": LAT, "lon": LON, "appid": API_KEY},
+            headers=headers,
+            timeout=10
+        )
+        
+        aqi_idx = 2
+        if a_resp.status_code == 200 and a_resp.text.strip():
+            a_json = a_resp.json()
+            aqi_idx = a_json["list"][0]["main"]["aqi"]
+            aqi_labels = {1: "Good", 2: "Fair", 3: "Moderate", 4: "Poor", 5: "Very Poor"}
+            data["aqi_text"] = aqi_labels.get(aqi_idx, "Moderate")
+            
+        # એકંદર Emergency Level અને મુખ્ય પરિસ્થિતિ (Situation) નક્કી કરવી
+        if data["flood_alert"] == "High" or aqi_idx >= 5 or data["temp"] >= 42:
+            data["emergency"] = "High"
+        elif data["flood_alert"] == "Medium" or aqi_idx >= 3 or data["temp"] >= 37:
+            data["emergency"] = "Medium"
+        else:
+            data["emergency"] = "Low"
+            
+        # હાલના હવામાન મુજબ AI Decision Center માં કયો વિકલ્પ પહેલા બતાવવો
+        if data["flood_alert"] in ["High", "Medium"]:
+            data["auto_situation"] = "Flood"
+        elif data["temp"] >= 36:
+            data["auto_situation"] = "Heatwave"
+        else:
+            data["auto_situation"] = "Air Pollution"
+            
+    except Exception:
+        pass
+        
+    return data
+
+# નવસારીનો લાઈવ ડેટા મેળવો
+live_data = get_navsari_live_data()
+
+# સ્ટેટસ બાર
+if live_data["is_live"]:
+    st.success(f"🛰 542 Sensors Online in **Navsari** | Live Temp: **{live_data['temp']}°C** | Humidity: **{live_data['humidity']}%**")
+else:
+    st.warning("🛰 542 Sensors Online | Showing Backup Telemetry Data")
+
+st.success("⚡ Power Grid Connected")
+st.success(f"☁ Weather Monitoring Active (Last Sync: {live_data['updated_time']})")
+
+# 4 લાઈવ મેટ્રિક્સ કાર્ડ્સ
+col1, col2, col3, col4 = st.columns(4)
 
 col1.metric(
     "🌊 Flood Alert",
-    "Medium"
+    live_data["flood_alert"],
+    f"Rain: {live_data['rain']} mm"
 )
 
 col2.metric(
     "🌫 AQI Status",
-    "Moderate"
+    live_data["aqi_text"],
+    "Navsari Live"
 )
 
 col3.metric(
     "⚡ Power Demand",
-    "84%"
+    live_data["power_demand"],
+    f"Temp: {live_data['temp']}°C"
 )
 
 col4.metric(
     "🚨 Emergency Level",
-    "Low"
+    live_data["emergency"]
 )
 
 st.divider()
 
-st.subheader("AI Decision Center")
+# AI Decision Center (નવસારીની હાલની પરિસ્થિતિ મુજબ આપમેળે પસંદ થશે)
+st.subheader("🧠 AI Decision Center (Navsari)")
+
+situations = ["Flood", "Heatwave", "Air Pollution"]
+default_index = situations.index(live_data["auto_situation"])
 
 status = st.selectbox(
-    "Select Situation",
-    [
-        "Flood",
-        "Heatwave",
-        "Air Pollution"
-    ]
+    "Select Situation (Auto-detected based on live weather)",
+    situations,
+    index=default_index
 )
 
 if status == "Flood":
-
     st.error("""
-✅ Activate Emergency Pumps
+    ✅ Activate Emergency Pumps in Low-Lying Areas (Purna River Belt)
 
-✅ Open Water Channels
+    ✅ Open Water Drainage Channels
 
-✅ Public Alert System
+    ✅ Issue Public Flood Alert System
 
-✅ Evacuation Ready
-""")
+    ✅ Keep Rescue & Evacuation Teams Ready
+    """)
 
 elif status == "Heatwave":
-
     st.warning("""
-✅ Open Cooling Centers
+    ✅ Open Public Cooling & Hydration Centers
 
-✅ Water Distribution
+    ✅ Increase Drinking Water Distribution
 
-✅ Public Health Advisory
-""")
+    ✅ Issue Afternoon Heatwave Health Advisory
+    """)
 
 else:
-
     st.info("""
-✅ Reduce Traffic Pollution
+    ✅ Monitor & Reduce Highway/City Traffic Pollution
 
-✅ Monitor Factories
+    ✅ Inspect Industrial & Factory Emissions
 
-✅ Air Quality Surveillance
-""")
+    ✅ Active Air Quality Surveillance across Navsari
+    """)

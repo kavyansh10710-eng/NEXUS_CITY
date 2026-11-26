@@ -25,7 +25,7 @@ def get_navsari_live_data():
         "aqi_text": "Moderate",
         "flood_alert": "Low",
         "power_demand": "75%",
-        "emergency": "Low",
+        "risk_level": "Low",
         "auto_situation": "Air Pollution",
         "updated_time": datetime.now().strftime("%I:%M %p")
     }
@@ -58,7 +58,7 @@ def get_navsari_live_data():
             else:
                 data["flood_alert"] = "Low"
                 
-            # તાપમાન મુજબ Power Demand (AC/પંખાના વપરાશ મુજબ) ગણતરી
+            # તાપમાન મુજબ Power Demand ગણતરી
             calc_power = min(98, max(55, int(50 + (temp * 1.1))))
             data["power_demand"] = f"{calc_power}%"
             
@@ -77,13 +77,13 @@ def get_navsari_live_data():
             aqi_labels = {1: "Good", 2: "Fair", 3: "Moderate", 4: "Poor", 5: "Very Poor"}
             data["aqi_text"] = aqi_labels.get(aqi_idx, "Moderate")
             
-        # એકંદર Emergency Level અને મુખ્ય પરિસ્થિતિ (Situation) નક્કી કરવી
+        # એકંદર Risk Level અને મુખ્ય પરિસ્થિતિ (Situation) નક્કી કરવી
         if data["flood_alert"] == "High" or aqi_idx >= 5 or data["temp"] >= 42:
-            data["emergency"] = "High"
+            data["risk_level"] = "High"
         elif data["flood_alert"] == "Medium" or aqi_idx >= 3 or data["temp"] >= 37:
-            data["emergency"] = "Medium"
+            data["risk_level"] = "Medium"
         else:
-            data["emergency"] = "Low"
+            data["risk_level"] = "Low"
             
         # હાલના હવામાન મુજબ AI Decision Center માં કયો વિકલ્પ પહેલા બતાવવો
         if data["flood_alert"] in ["High", "Medium"]:
@@ -110,30 +110,35 @@ else:
 st.success("⚡ Power Grid Connected")
 st.success(f"☁ Weather Monitoring Active (Last Sync: {live_data['updated_time']})")
 
-# 4 લાઈવ મેટ્રિક્સ કાર્ડ્સ
-col1, col2, col3, col4 = st.columns(4)
+# 5 લાઈવ મેટ્રિક્સ કાર્ડ્સ (Temperature ઉમેર્યું અને Risk Level નામ રાખ્યું)
+col1, col2, col3, col4, col5 = st.columns(5)
 
 col1.metric(
+    "🌡 Temperature",
+    f"{live_data['temp']} °C",
+    f"Humidity: {live_data['humidity']}%"
+)
+
+col2.metric(
     "🌊 Flood Alert",
     live_data["flood_alert"],
     f"Rain: {live_data['rain']} mm"
 )
 
-col2.metric(
+col3.metric(
     "🌫 AQI Status",
     live_data["aqi_text"],
     "Navsari Live"
 )
 
-col3.metric(
+col4.metric(
     "⚡ Power Demand",
-    live_data["power_demand"],
-    f"Temp: {live_data['temp']}°C"
+    live_data["power_demand"]
 )
 
-col4.metric(
-    "🚨 Emergency Level",
-    live_data["emergency"]
+col5.metric(
+    "⚠️ Risk Level",
+    live_data["risk_level"]
 )
 
 st.divider()

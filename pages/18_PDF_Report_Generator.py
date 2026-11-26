@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from io import BytesIO
@@ -7,195 +8,145 @@ from assets.theme import apply_theme
 
 apply_theme()
 
-st.title("📄 NEXUS AI PDF Report Generator")
+st.title("📄 NEXUS AI Live PDF Report Generator")
 
-city = st.selectbox(
-    "🏙 Select City",
-    [
-        "Navsari",
-        "Ahmedabad",
-        "Mumbai",
-        "Bombay"
-    ]
-)
+# શહેરો અને તેમના Latitude, Longitude
+cities = {
+    "Navsari": (20.95, 72.93),
+    "Vansda": (20.76, 73.37),
+    "Surat": (21.17, 72.83),
+    "Ahmedabad": (23.02, 72.57),
+    "Mumbai": (19.07, 72.87)
+}
 
-flood_risk = st.slider(
-    "🌊 Flood Risk (%)",
-    0,
-    100,
-    40
-)
+city = st.selectbox("🏙 Select City", list(cities.keys()))
+lat, lon = cities[city]
 
-aqi = st.slider(
-    "🌫 AQI",
-    0,
-    500,
-    95
-)
+# ડિફોલ્ટ વેલ્યુ (જો ઈન્ટરનેટ કે API માં કોઈ એરર આવે તો કામ લાગશે)
+live_temp = 30
+live_aqi = 85
+live_flood_risk = 20
+is_live = False
 
-temperature = st.slider(
-    "🌡 Temperature (°C)",
-    0,
-    50,
-    32
-)
+try:
+    # 1. લાઈવ હવામાન અને વરસાદનો ડેટા (Open-Meteo Weather API)
+    weather_url = (
+        f"https://open-meteo.com"
+        f"?latitude={lat}&longitude={lon}"
+        f"&current=temperature_2m,rain"
+    )
+    w_res = requests.get(weather_url, timeout=8).json()
+    live_temp = int(round(w_res["current"]["temperature_2m"]))
+    rain_mm = w_res["current"]["rain"]
+
+    # વરસાદના આધારે Flood Risk ની ગણતરી (Base 15% + વરસાદ મુજબ વધારો)
+    live_flood_risk = min(100, int(15 + (rain_mm * 15)))
+
+    # 2. લાઈવ AQI ડેટા (Open-Meteo Air Quality API)
+    aqi_url = (
+        f"https://open-meteo.com"
+        f"?latitude={lat}&longitude={lon}"
+        f"&current=us_aqi"
+    )
+    a_res = requests.get(aqi_url, timeout=8).json()
+    live_aqi = int(a_res["current"]["us_aqi"])
+    
+    is_live = True
+
+except Exception:
+    st.warning("⚠️ Live API connection failed. Showing default simulated values.")
+
+if is_live:
+    st.success(f"🟢 Live Real-Time Data Loaded for **{city}** (You can still adjust sliders to simulate future scenarios)")
+
+# લાઈવ ડેટા સાથેના સ્લાઈડર્સ
+flood_risk = st.slider("🌊 Flood Risk (%)", 0, 100, live_flood_risk)
+aqi = st.slider("🌫 Air Quality Index (AQI)", 0, 500, live_aqi)
+temperature = st.slider("🌡 Temperature (°C)", 0, 50, live_temp)
 
 if st.button("📄 Generate PDF Report"):
 
     buffer = BytesIO()
-
-    pdf = canvas.Canvas(
-        buffer,
-        pagesize=A4
-    )
-
+    pdf = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
 
-    pdf.setFont("Helvetica-Bold",20)
-    pdf.drawString(
-        50,
-        800,
-        "NEXUS AI Future Simulator"
-    )
+    # હેડર
+    pdf.setFont("Helvetica-Bold", 20)
+    pdf.drawString(50, 800, "NEXUS AI Future Simulator")
 
-    pdf.setFont("Helvetica",14)
-    pdf.drawString(
-        50,
-        770,
-        "Smart City Risk Assessment Report"
-    )
+    pdf.setFont("Helvetica", 14)
+    pdf.drawString(50, 770, "Smart City Live Risk Assessment Report")
 
-    pdf.line(
-        50,
-        760,
-        550,
-        760
-    )
+    pdf.line(50, 760, 550, 760)
 
-    pdf.setFont(
-        "Helvetica",
-        12
-    )
+    # શહેર અને લાઈવ ડેટા
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(50, 720, f"City : {city}")
+    pdf.drawString(50, 690, f"Flood Risk : {flood_risk}%")
+    pdf.drawString(50, 660, f"Air Quality Index (AQI) : {aqi}")
+    pdf.drawString(50, 630, f"Temperature : {temperature} °C")
+    pdf.drawString(50, 600, f"Report Date & Time : {datetime.now().strftime('%d-%m-%Y %I:%M %p')}")
 
-    pdf.drawString(
-        50,
-        720,
-        f"City : {city}"
-    )
+    pdf.line(50, 570, 550, 570)
 
-    pdf.drawString(
-        50,
-        690,
-        f"Flood Risk : {flood_risk}%"
-    )
+    # AI વિશ્લેષણ
+    pdf.setFont("Helvetica-Bold", 14)
+    pdf.drawString(50, 530, "AI Risk Analysis & Recommendations")
 
-    pdf.drawString(
-        50,
-        660,
-        f"Air Quality Index : {aqi}"
-    )
-
-    pdf.drawString(
-        50,
-        630,
-        f"Temperature : {temperature} °C"
-    )
-
-    pdf.drawString(
-        50,
-        600,
-        f"Date : {datetime.now().strftime('%d-%m-%Y')}"
-    )
-
-    pdf.line(
-        50,
-        570,
-        550,
-        570
-    )
-
-    pdf.setFont(
-        "Helvetica-Bold",
-        14
-    )
-
-    pdf.drawString(
-        50,
-        530,
-        "AI Analysis"
-    )
-
-    pdf.setFont(
-        "Helvetica",
-        12
-    )
+    pdf.setFont("Helvetica", 12)
 
     if flood_risk >= 70:
-        status = "HIGH RISK"
+        status = "HIGH FLOOD RISK"
         recommendation = (
-            "Expand Water Reservoirs, "
-            "Deploy Emergency Teams, "
-            "Activate Flood Warning System."
+            "1. Expand Water Reservoirs & Open Dam Gates.\n"
+            "2. Deploy Emergency Rescue Teams immediately.\n"
+            "3. Activate Public Flood Warning System."
         )
     elif flood_risk >= 40:
-        status = "MEDIUM RISK"
+        status = "MEDIUM FLOOD RISK"
         recommendation = (
-            "Monitor Water Levels and "
-            "Improve Drainage Infrastructure."
+            "1. Monitor River and Dam Water Levels closely.\n"
+            "2. Clear Drainage Infrastructure in low-lying areas."
         )
     else:
-        status = "LOW RISK"
+        status = "LOW FLOOD RISK"
         recommendation = (
-            "Current Conditions Stable."
+            "1. Current water and weather conditions are stable.\n"
+            "2. Continue routine smart city monitoring."
         )
 
-    pdf.drawString(
-        50,
-        490,
-        f"Risk Status : {status}"
-    )
+    # AQI સલાહ પણ PDF માં ઉમેરી છે
+    if aqi > 150:
+        aqi_advice = "Air Quality Alert: Advise citizens to wear N95 masks outdoors."
+    elif aqi > 100:
+        aqi_advice = "Air Quality Note: Sensitive groups should limit outdoor exertion."
+    else:
+        aqi_advice = "Air Quality Status: Air quality is safe for normal activities."
 
-    pdf.drawString(
-        50,
-        450,
-        "Recommendations:"
-    )
+    pdf.drawString(50, 495, f"Overall Status : {status}")
+    pdf.drawString(50, 470, f"{aqi_advice}")
 
-    text = pdf.beginText(
-        50,
-        420
-    )
+    pdf.setFont("Helvetica-Bold", 12)
+    pdf.drawString(50, 435, "Action Plan:")
 
-    text.textLines(
-        recommendation
-    )
-
+    pdf.setFont("Helvetica", 11)
+    text = pdf.beginText(50, 415)
+    text.textLines(recommendation)
     pdf.drawText(text)
 
-    pdf.line(
-        50,
-        150,
-        550,
-        150
-    )
-
-    pdf.drawString(
-        50,
-        120,
-        "Generated by NEXUS Smart City AI Platform"
-    )
+    # ફૂટર
+    pdf.line(50, 150, 550, 150)
+    pdf.setFont("Helvetica-Oblique", 10)
+    pdf.drawString(50, 130, "Generated by NEXUS Smart City AI Platform | Real-Time Intelligence")
 
     pdf.save()
-
     pdf_data = buffer.getvalue()
 
-    st.success(
-        "✅ PDF Report Generated Successfully"
-    )
+    st.success("✅ Live PDF Report Generated Successfully!")
 
     st.download_button(
         label="⬇ Download PDF Report",
         data=pdf_data,
-        file_name=f"{city}_NEXUS_Report.pdf",
+        file_name=f"{city}_NEXUS_Live_Report.pdf",
         mime="application/pdf"
     )

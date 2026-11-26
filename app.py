@@ -173,7 +173,6 @@ with col5:
         aqi_status.get(aqi, "N/A")
     )
 
-st.caption("📍 Vansda, Navsari, Gujarat")
 # -----------------------------
 # MAIN CONTENT
 # -----------------------------

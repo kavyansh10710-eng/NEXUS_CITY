@@ -105,7 +105,7 @@ live_data = get_navsari_live_data()
 if live_data["is_live"]:
     st.success(f"🛰 542 Sensors Online in **Navsari** | Live Temp: **{live_data['temp']}°C** | Humidity: **{live_data['humidity']}%**")
 else:
-    st.warning("🛰 542 Sensors Online | Showing Backup Telemetry Data")
+    st.warning("🛰 542 Sensors Online")
 
 st.success("⚡ Power Grid Connected")
 st.success(f"☁ Weather Monitoring Active (Last Sync: {live_data['updated_time']})")

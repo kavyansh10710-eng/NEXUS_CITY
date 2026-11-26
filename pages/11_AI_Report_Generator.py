@@ -28,9 +28,16 @@ live_flood_risk = 20
 is_live = False
 
 try:
-    # 1. લાઈવ હવામાન અને વરસાદ (Open-Meteo Weather API)
-    weather_url = f"https://open-meteo.com{lat}&longitude={lon}&current=temperature_2m,rain"
-    w_res = requests.get(weather_url, timeout=10).json()
+    # 1. લાઈવ હવામાન અને વરસાદ (params નો ઉપયોગ કરવાથી URL ક્યારેય તૂટશે નહીં)
+    w_res = requests.get(
+        "https://open-meteo.com",
+        params={
+            "latitude": lat,
+            "longitude": lon,
+            "current": "temperature_2m,rain"
+        },
+        timeout=10
+    ).json()
     
     if "current" in w_res:
         live_temp = int(round(float(w_res["current"]["temperature_2m"])))
@@ -38,12 +45,18 @@ try:
         live_flood_risk = min(100, int(15 + (rain_mm * 15)))
         is_live = True
 
-    # 2. લાઈવ AQI ડેટા (Open-Meteo Air Quality API)
-    aqi_url = f"https://open-meteo.com{lat}&longitude={lon}&current=us_aqi,european_aqi"
-    a_res = requests.get(aqi_url, timeout=10).json()
+    # 2. લાઈવ AQI ડેટા
+    a_res = requests.get(
+        "https://open-meteo.com",
+        params={
+            "latitude": lat,
+            "longitude": lon,
+            "current": "us_aqi,european_aqi"
+        },
+        timeout=10
+    ).json()
     
     if "current" in a_res:
-        # જો us_aqi ખાલી હોય તો european_aqi લેશે
         raw_aqi = a_res["current"].get("us_aqi") or a_res["current"].get("european_aqi")
         if raw_aqi is not None:
             live_aqi = int(round(float(raw_aqi)))
@@ -56,7 +69,7 @@ if is_live:
 else:
     st.warning("⚠️ Could not fetch live data. Showing default values.")
 
-# ખાસ સુધારો: key=f"..._{city}" મૂકવાથી શહેર બદલતા જ સ્લાઈડર નવા લાઈવ ડેટા પર અપડેટ થશે!
+# શહેર બદલતા જ સ્લાઈડર નવા લાઈવ ડેટા પર અપડેટ થશે
 flood_risk = st.slider("🌊 Flood Risk (%)", 0, 100, live_flood_risk, key=f"flood_{city}")
 aqi = st.slider("🌫 Air Quality Index (AQI)", 0, 500, live_aqi, key=f"aqi_{city}")
 temperature = st.slider("🌡 Temperature (°C)", 0, 50, live_temp, key=f"temp_{city}")

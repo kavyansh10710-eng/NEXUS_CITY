@@ -161,18 +161,12 @@ m = folium.Map(
     control_scale=True
 )
 
-# Satellite Layer
 folium.TileLayer(
-    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri",
-    name="Satellite"
-).add_to(m)
-
-# Labels
-folium.TileLayer(
-    tiles="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri",
-    name="Labels"
+    tiles="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+    attr="Google",
+    name="Google Hybrid",
+    overlay=False,
+    control=True
 ).add_to(m)
 
 # ==================================================

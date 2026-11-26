@@ -189,8 +189,6 @@ NEXUS is an advanced Decision Intelligence Platform.
 
 ✅ Weather Intelligence
 
-✅ Explainable AI
-
 ✅ Future Scenario Simulation
 
 ✅ Real-Time Risk Assessment
@@ -212,9 +210,7 @@ with c1:
 <h3>🌊 Flood Prediction Engine</h3>
 
 • Rainfall Analysis<br>
-• River Level Monitoring<br>
 • Risk Score Generation<br>
-• Early Warning Alerts
 
 </div>
 """, unsafe_allow_html=True)

@@ -124,7 +124,7 @@ Detect → Predict → Decide
 # HERO IMAGE
 # -----------------------------
 st.image(
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920",
+    "assets/hero_banner.png",  # જો મુખ્ય ફોલ્ડરમાં મૂકી હોય તો ફક્ત "hero_banner.png" લખવું
     use_container_width=True
 )
 

@@ -10,7 +10,6 @@ apply_theme()
 
 st.title("📄 NEXUS AI Live PDF Report Generator")
 
-# તમારી OpenWeather API Key
 API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
 
 cities = {
@@ -24,58 +23,65 @@ cities = {
 city = st.selectbox("🏙 Select City", list(cities.keys()))
 lat, lon = cities[city]
 
-# ડિફોલ્ટ વેલ્યુ
-live_temp = 30
-live_aqi = 85
-live_flood_risk = 20
-is_live = False
-
-try:
-    # 1. લાઈવ હવામાન અને વરસાદ (OpenWeather API)
-    w_res = requests.get(
-        "https://openweathermap.org",
-        params={
-            "lat": lat,
-            "lon": lon,
-            "appid": API_KEY,
-            "units": "metric"
-        },
-        timeout=10
-    ).json()
+# 10 મિનિટ (600 સેકન્ડ) સુધી ડેટા કેશ (Cache) રાખશે જેથી API બ્લોક ન થાય
+@st.cache_data(ttl=600)
+def fetch_live_weather(lat, lon):
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    temp, aqi, flood = 30, 85, 20
     
-    if "main" in w_res:
-        live_temp = int(round(float(w_res["main"]["temp"])))
-        # જો વરસાદ પડતો હોય તો તેનો ડેટા લેશે, નહીંતર 0
-        rain_mm = float(w_res.get("rain", {}).get("1h", 0))
-        humidity = int(w_res["main"]["humidity"])
+    # પ્રયત્ન 1: OpenWeather API
+    w_resp = requests.get(
+        f"https://openweathermap.org{lat}&lon={lon}&appid={API_KEY}&units=metric",
+        headers=headers,
+        timeout=10
+    )
+    
+    if w_resp.status_code == 200 and w_resp.text.strip():
+        w_data = w_resp.json()
+        temp = int(round(float(w_data["main"]["temp"])))
+        rain_mm = float(w_data.get("rain", {}).get("1h", 0))
+        humidity = int(w_data["main"]["humidity"])
+        flood = min(100, int((humidity * 0.25) + (rain_mm * 15)))
         
-        # વરસાદ અને ભેજ મુજબ Flood Risk ની ગણતરી
-        live_flood_risk = min(100, int((humidity * 0.25) + (rain_mm * 15)))
-        is_live = True
-
-    # 2. લાઈવ AQI ડેટા (OpenWeather Air Pollution API)
-    a_res = requests.get(
-        "https://openweathermap.org",
-        params={
-            "lat": lat,
-            "lon": lon,
-            "appid": API_KEY
-        },
-        timeout=10
-    ).json()
+        # AQI ડેટા
+        a_resp = requests.get(
+            f"https://openweathermap.org{lat}&lon={lon}&appid={API_KEY}",
+            headers=headers,
+            timeout=10
+        )
+        if a_resp.status_code == 200 and a_resp.text.strip():
+            a_data = a_resp.json()
+            aqi_idx = a_data["list"]["main"]["aqi"]
+            aqi_map = {1: 35, 2: 75, 3: 130, 4: 210, 5: 320}
+            aqi = aqi_map.get(aqi_idx, 95)
+            
+        return True, temp, aqi, flood, "OpenWeather"
     
-    if "list" in a_res:
-        # OpenWeather 1 થી 5 નો સ્કેલ આપે છે, તેને 0-500 ના સ્કેલમાં ફેરવ્યું છે
-        aqi_index = a_res["list"][0]["main"]["aqi"]
-        aqi_map = {1: 35, 2: 75, 3: 130, 4: 210, 5: 320}
-        live_aqi = aqi_map.get(aqi_index, 95)
+    # પ્રયત્ન 2: જો OpenWeather માં એરર આવે તો Open-Meteo બેકઅપ
+    om_resp = requests.get(
+        f"https://open-meteo.com{lat}&longitude={lon}&current=temperature_2m,rain",
+        headers=headers,
+        timeout=10
+    )
+    if om_resp.status_code == 200 and om_resp.text.strip():
+        om_data = om_resp.json()
+        temp = int(round(float(om_data["current"]["temperature_2m"])))
+        rain_mm = float(om_data["current"]["rain"])
+        flood = min(100, int(15 + (rain_mm * 15)))
+        return True, temp, 85, flood, "Open-Meteo"
 
+    return False, temp, aqi, flood, f"Status: {w_resp.status_code} | Msg: {w_resp.text[:100]}"
+
+# ડેટા લાવવાનો પ્રયત્ન કરો
+try:
+    is_live, live_temp, live_aqi, live_flood_risk, source_info = fetch_live_weather(lat, lon)
 except Exception as e:
-    st.error(f"⚠️ API Connection Error: {e}")
+    is_live, live_temp, live_aqi, live_flood_risk, source_info = False, 30, 85, 20, str(e)
 
 if is_live:
-    st.success(f"🟢 Live Real-Time Data Loaded for **{city}**! (Temp: {live_temp}°C | AQI: {live_aqi})")
+    st.success(f"🟢 Live Real-Time Data Loaded for **{city}** via {source_info}! (Temp: {live_temp}°C | AQI: {live_aqi})")
 else:
+    st.error(f"⚠️ API Debug Info: {source_info}")
     st.warning("⚠️ Could not fetch live data. Showing default values.")
 
 # શહેર બદલતા જ સ્લાઈડર નવા લાઈવ ડેટા પર અપડેટ થશે

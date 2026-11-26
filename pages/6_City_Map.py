@@ -50,7 +50,7 @@ st_autorefresh(
 st.title("🛰️ NEXUS ∞ Smart City Map")
 
 st.info(
-    "• 🌡️ Live Weather • 🔄 Refresh Every 5 Minutes"
+    "🌡️ Live Weather • 🌧️ Rainfall • 💨 Wind • 🫁 AQI • 🔄 Refresh Every 5 Minutes"
 )
 
 # =========================
@@ -139,7 +139,7 @@ def get_weather_data(lat, lon):
 
         air_data = air_response.json()
 
-        pm25 = air_data["list"][0]["components"]["pm2_5"]
+        aqi = air_data["list"][0]["main"]["aqi"]
 
         return {
             "temp": round(temp,1),
@@ -147,29 +147,12 @@ def get_weather_data(lat, lon):
             "wind": round(wind,1),
             "weather": condition,
             "rainfall": rainfall,
-            "aqi": round(pm25,1)
+            "aqi": aqi
         }
+
     except:
         return None
-       def get_aqi_status(aqi):
 
-            if aqi <= 12:
-                return "🟢 Good"
-
-            elif aqi <= 35:
-                return "🟡 Moderate"
-
-            elif aqi <= 55:
-                return "🟠 Unhealthy"
-
-            elif aqi <= 150:
-                return "🔴 Poor"
-
-            elif aqi <= 250:
-                return "🟣 Very Poor"
-
-            else:
-                return "⚫ Hazardous"
 
 # =========================
 # CITY SEARCH
@@ -283,43 +266,39 @@ for _, row in df.iterrows():
         }
 
     aqi = data["aqi"]
-    aqi_status = get_aqi_status(aqi)
 
-if aqi <= 12:
-    marker_color = "#00ff00"
+    marker_color = "#00ffff"
 
-elif aqi <= 35:
-    marker_color = "#ffff00"
+    if aqi == 1:
+        marker_color = "#00ff00"
 
-elif aqi <= 55:
-    marker_color = "#ff9900"
+    elif aqi == 2:
+        marker_color = "#ccff00"
 
-elif aqi <= 150:
-    marker_color = "#ff0000"
+    elif aqi == 3:
+        marker_color = "#ffff00"
 
-elif aqi <= 250:
-    marker_color = "#9900ff"
+    elif aqi == 4:
+        marker_color = "#ff8800"
 
-else:
-    marker_color = "#7e0023"
+    elif aqi == 5:
+        marker_color = "#ff0000"
 
-   popup = f"""
-<div style="width:280px">
+    popup = f"""
+    <div style="width:260px">
 
-<h3 style="color:{marker_color}">
-🏙️ {row["City"]}
-</h3>
+    <h3 style="color:{marker_color}">
+    🏙️ {row["City"]}
+    </h3>
 
-<hr>
+    <hr>
 
-🌡️ Temperature: {data["temp"]} °C<br>
-☁️ Weather: {data["weather"]}<br>
-💧 Humidity: {data["humidity"]}%<br>
-🌧️ Rainfall: {data["rainfall"]} mm<br>
-💨 Wind Speed: {data["wind"]} m/s<br>
-🫁 AQI: {data["aqi"]}<br>
-📊 Status: {aqi_status}<br><br>
-
+    🌡️ Temperature: {data["temp"]} °C<br>
+    ☁️ Weather: {data["weather"]}<br>
+    💧 Humidity: {data["humidity"]}%<br>
+    🌧️ Rainfall: {data["rainfall"]} mm<br>
+    💨 Wind Speed: {data["wind"]} m/s<br>
+    🫁 AQI: {data["aqi"]}<br><br>
 
     ✅ Live Monitoring<br>
 
@@ -353,10 +332,11 @@ else:
 
 st_folium(
     m,
-    width="stretch",
+    use_container_width=True,
     height=800
 )
 
 st.success(
     f"✅ Monitoring {len(df)} Major Indian Cities"
 )
+<br>

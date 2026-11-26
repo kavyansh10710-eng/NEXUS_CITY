@@ -18,13 +18,13 @@ fig = go.Figure(go.Indicator(
     value=aqi,
     title={'text': "Air Quality Index"},
     gauge={
-        'axis': {'range': [0, 500]},
-        'steps': [
-            {'range':, 'color': 'green'},
-            {'range':, 'color': 'yellow'},
-            {'range':, 'color': 'orange'},
-            {'range':, 'color': 'red'}
-        ]
+        'axis': {'range': (0, 500)},
+        'steps': (
+            {'range': (0, 50), 'color': 'green'},
+            {'range': (51, 100), 'color': 'yellow'},
+            {'range': (101, 200), 'color': 'orange'},
+            {'range': (201, 500), 'color': 'red'}
+        )
     }
 ))
 

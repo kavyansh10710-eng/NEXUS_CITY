@@ -151,7 +151,25 @@ def get_weather_data(lat, lon):
         }
     except:
         return None
+        def get_aqi_status(aqi):
 
+    if aqi <= 12:
+        return "🟢 Good"
+
+    elif aqi <= 35:
+        return "🟡 Moderate"
+
+    elif aqi <= 55:
+        return "🟠 Unhealthy"
+
+    elif aqi <= 150:
+        return "🔴 Poor"
+
+    elif aqi <= 250:
+        return "🟣 Very Poor"
+
+    else:
+        return "⚫ Hazardous"
 
 # =========================
 # CITY SEARCH
@@ -265,39 +283,43 @@ for _, row in df.iterrows():
         }
 
     aqi = data["aqi"]
+    aqi_status = get_aqi_status(aqi)
 
-    marker_color = "#00ffff"
+if aqi <= 12:
+    marker_color = "#00ff00"
 
-    if aqi == 1:
-        marker_color = "#00ff00"
+elif aqi <= 35:
+    marker_color = "#ffff00"
 
-    elif aqi == 2:
-        marker_color = "#ccff00"
+elif aqi <= 55:
+    marker_color = "#ff9900"
 
-    elif aqi == 3:
-        marker_color = "#ffff00"
+elif aqi <= 150:
+    marker_color = "#ff0000"
 
-    elif aqi == 4:
-        marker_color = "#ff8800"
+elif aqi <= 250:
+    marker_color = "#9900ff"
 
-    elif aqi == 5:
-        marker_color = "#ff0000"
+else:
+    marker_color = "#7e0023"
 
-    popup = f"""
-    <div style="width:260px">
+   popup = f"""
+<div style="width:280px">
 
-    <h3 style="color:{marker_color}">
-    🏙️ {row["City"]}
-    </h3>
+<h3 style="color:{marker_color}">
+🏙️ {row["City"]}
+</h3>
 
-    <hr>
+<hr>
 
-    🌡️ Temperature: {data["temp"]} °C<br>
-    ☁️ Weather: {data["weather"]}<br>
-    💧 Humidity: {data["humidity"]}%<br>
-    🌧️ Rainfall: {data["rainfall"]} mm<br>
-    💨 Wind Speed: {data["wind"]} m/s<br>
-    🫁 AQI: {data["aqi"]}<br><br>
+🌡️ Temperature: {data["temp"]} °C<br>
+☁️ Weather: {data["weather"]}<br>
+💧 Humidity: {data["humidity"]}%<br>
+🌧️ Rainfall: {data["rainfall"]} mm<br>
+💨 Wind Speed: {data["wind"]} m/s<br>
+🫁 AQI: {data["aqi"]}<br>
+📊 Status: {aqi_status}<br><br>
+
 
     ✅ Live Monitoring<br>
 

@@ -10,6 +10,9 @@ apply_theme()
 
 st.title("📄 NEXUS AI Live PDF Report Generator")
 
+# તમારી OpenWeather API Key
+API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
+
 cities = {
     "Navsari": (20.95, 72.93),
     "Vansda": (20.76, 73.37),
@@ -28,38 +31,44 @@ live_flood_risk = 20
 is_live = False
 
 try:
-    # 1. લાઈવ હવામાન અને વરસાદ (params નો ઉપયોગ કરવાથી URL ક્યારેય તૂટશે નહીં)
+    # 1. લાઈવ હવામાન અને વરસાદ (OpenWeather API)
     w_res = requests.get(
-        "https://open-meteo.com",
+        "https://openweathermap.org",
         params={
-            "latitude": lat,
-            "longitude": lon,
-            "current": "temperature_2m,rain"
+            "lat": lat,
+            "lon": lon,
+            "appid": API_KEY,
+            "units": "metric"
         },
         timeout=10
     ).json()
     
-    if "current" in w_res:
-        live_temp = int(round(float(w_res["current"]["temperature_2m"])))
-        rain_mm = float(w_res["current"]["rain"])
-        live_flood_risk = min(100, int(15 + (rain_mm * 15)))
+    if "main" in w_res:
+        live_temp = int(round(float(w_res["main"]["temp"])))
+        # જો વરસાદ પડતો હોય તો તેનો ડેટા લેશે, નહીંતર 0
+        rain_mm = float(w_res.get("rain", {}).get("1h", 0))
+        humidity = int(w_res["main"]["humidity"])
+        
+        # વરસાદ અને ભેજ મુજબ Flood Risk ની ગણતરી
+        live_flood_risk = min(100, int((humidity * 0.25) + (rain_mm * 15)))
         is_live = True
 
-    # 2. લાઈવ AQI ડેટા
+    # 2. લાઈવ AQI ડેટા (OpenWeather Air Pollution API)
     a_res = requests.get(
-        "https://open-meteo.com",
+        "https://openweathermap.org",
         params={
-            "latitude": lat,
-            "longitude": lon,
-            "current": "us_aqi,european_aqi"
+            "lat": lat,
+            "lon": lon,
+            "appid": API_KEY
         },
         timeout=10
     ).json()
     
-    if "current" in a_res:
-        raw_aqi = a_res["current"].get("us_aqi") or a_res["current"].get("european_aqi")
-        if raw_aqi is not None:
-            live_aqi = int(round(float(raw_aqi)))
+    if "list" in a_res:
+        # OpenWeather 1 થી 5 નો સ્કેલ આપે છે, તેને 0-500 ના સ્કેલમાં ફેરવ્યું છે
+        aqi_index = a_res["list"][0]["main"]["aqi"]
+        aqi_map = {1: 35, 2: 75, 3: 130, 4: 210, 5: 320}
+        live_aqi = aqi_map.get(aqi_index, 95)
 
 except Exception as e:
     st.error(f"⚠️ API Connection Error: {e}")

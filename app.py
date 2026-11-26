@@ -176,7 +176,7 @@ with col5:
 # -----------------------------
 # MAIN CONTENT
 # -----------------------------
-st.markdown("## 🚀 Welcome to NEXUS CITY")
+st.markdown("## 🚀 Welcome to NEXUS")
 
 st.markdown("""
 ### AI Powered Smart City Command Center

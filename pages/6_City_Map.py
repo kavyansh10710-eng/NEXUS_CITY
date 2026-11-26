@@ -139,7 +139,7 @@ def get_weather_data(lat, lon):
 
         air_data = air_response.json()
 
-        aqi = air_data["list"][0]["main"]["aqi"]
+        pm25 = air_data["list"][0]["components"]["pm2_5"]
 
         return {
             "temp": round(temp,1),
@@ -147,9 +147,8 @@ def get_weather_data(lat, lon):
             "wind": round(wind,1),
             "weather": condition,
             "rainfall": rainfall,
-            "aqi": aqi
+            "aqi": round(pm25,1)
         }
-
     except:
         return None
 

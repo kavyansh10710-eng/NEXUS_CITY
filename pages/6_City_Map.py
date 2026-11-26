@@ -50,7 +50,7 @@ st_autorefresh(
 st.title("🛰️ NEXUS ∞ Smart City Map")
 
 st.info(
-    "🌡️ Live Weather • 🌧️ Rainfall • 💨 Wind • 🫁 AQI • 🔄 Refresh Every 5 Minutes"
+    "• 🌡️ Live Weather • 🔄 Refresh Every 5 Minutes"
 )
 
 # =========================

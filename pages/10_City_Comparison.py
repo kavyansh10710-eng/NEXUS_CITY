@@ -148,16 +148,4 @@ st.plotly_chart(
     use_container_width=True
 )
 
-# Footer Card
 
-st.success("""
-📈 Comparative City Analytics
-
-✅ Infrastructure Risk
-
-✅ Population Growth
-
-✅ Environmental Factors
-
-✅ AI Future Score
-""")

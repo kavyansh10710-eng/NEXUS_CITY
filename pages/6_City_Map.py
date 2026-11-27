@@ -17,7 +17,7 @@ from streamlit_autorefresh import st_autorefresh
 
 st.set_page_config(
     page_title="NEXUS ∞ Smart City Map",
-    page_icon="🌍",
+    page_icon="",
     layout="wide"
 )
 
@@ -293,9 +293,7 @@ for _, row in df.iterrows():
     💨 Wind Speed: {data["wind"]} m/s<br>
     🫁 AQI: {data["aqi"]}<br><br>
 
-    🤖 NEXUS STATUS<br>
     ✅ Live Monitoring<br>
-    🛰️ Satellite Connected<br>
 
     </div>
     """

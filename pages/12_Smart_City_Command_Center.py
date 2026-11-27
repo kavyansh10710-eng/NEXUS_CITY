@@ -168,22 +168,22 @@ if status == "Flood":
 
 elif status == "Heatwave":
     st.warning("""
-    ✅ Drink Water Often: Drink plenty of water throughout the day, even if you do not feel thirsty.
-        Avoid tea, coffee, alcohol, and sugary drinks as they dehydrate your body.
+        ✅ Drink Water Often: Drink plenty of water throughout the day, even if you do not feel thirsty.
+            Avoid tea, coffee, alcohol, and sugary drinks as they dehydrate your body.
 
-    ✅ Stay Indoors During Peak Heat: Avoid going outside between 12:00 PM and 4:00 PM, when the sun is strongest. 
+        ✅ Stay Indoors During Peak Heat: Avoid going outside between 12:00 PM and 4:00 PM, when the sun is strongest. 
            Keep your windows and curtains closed during the day to block out hot air and sunlight.  
 
-    ✅ Wear Light Clothes: Wear loose-fitting, lightweight, 
-        and light-colored cotton clothes so your skin can breathe and sweat can evaporate easily.
+        ✅ Wear Light Clothes: Wear loose-fitting, lightweight, 
+            and light-colored cotton clothes so your skin can breathe and sweat can evaporate easily.
 
-    ✅ Keep Your Body Cool: Take cool showers, 
-        wash your face with cold water frequently, 
-        or place a damp cloth on your neck and forehead to lower your body temperature.  
+        ✅ Keep Your Body Cool: Take cool showers, 
+            wash your face with cold water frequently, 
+            or place a damp cloth on your neck and forehead to lower your body temperature.  
 
-     ✅ Protect Yourself When Going Out: If you must step outside, 
-         cover your head with a cap, hat, scarf, or umbrella, wear sunglasses,
-         and always carry a bottle of water with you.
+         ✅ Protect Yourself When Going Out: If you must step outside, 
+             cover your head with a cap, hat, scarf, or umbrella, wear sunglasses,
+             and always carry a bottle of water with you.
     """)
 
 else:

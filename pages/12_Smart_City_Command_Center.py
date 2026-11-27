@@ -146,7 +146,7 @@ st.divider()
 # AI Decision Center (નવસારીની હાલની પરિસ્થિતિ મુજબ આપમેળે પસંદ થશે)
 st.subheader("🧠 AI Decision Center (Navsari)")
 
-situations = ["Drought", "Heatwave","H","Air Pollution"]
+situations = ["Drought", "Heatwave","Typhoon","Air Pollution"]
 default_index = situations.index(live_data["auto_situation"])
 
 status = st.selectbox(
@@ -192,24 +192,23 @@ elif status == "Heatwave":
              and always carry a bottle of water with you.
     """)
 
-elif status == "H":
+elif status == "Typhoon":
     st.warning("""
-        ✅ Drink Water Often: Drink plenty of water throughout the day, even if you do not feel thirsty.
-            Avoid tea, coffee, alcohol, and sugary drinks as they dehydrate your body.
-
-        ✅ Stay Indoors During Peak Heat: Avoid going outside between 12:00 PM and 4:00 PM, when the sun is strongest. 
-           Keep your windows and curtains closed during the day to block out hot air and sunlight.  
-
-        ✅ Wear Light Clothes: Wear loose-fitting, lightweight, 
-            and light-colored cotton clothes so your skin can breathe and sweat can evaporate easily.
-
-        ✅ Keep Your Body Cool: Take cool showers, 
-            wash your face with cold water frequently, 
-            or place a damp cloth on your neck and forehead to lower your body temperature.  
-
-         ✅ Protect Yourself When Going Out: If you must step outside, 
-             cover your head with a cap, hat, scarf, or umbrella, wear sunglasses,
-             and always carry a bottle of water with you.
+        ✅ Prepare a 3-Day Emergency Go-Bag: Pack clean drinking water, non-perishable food,
+            a first-aid kit, medicines, a flashlight with extra batteries,
+            a fully charged power bank, and important documents in a waterproof bag.
+            
+        ✅Secure Your Home Early: Close and latch all doors and windows, bring loose outdoor items (like flower pots,
+            furniture, and drying racks) inside so strong winds do not turn them into flying hazards, 
+            and unplug non-essential electronics.
+        
+        ✅Stay Indoors Away from Windows: Move to an interior room, hallway, or lower floor away from glass windows and doors during the storm.
+           Keep your shoes on and a mattress or sturdy table nearby for cover in case winds damage the roof.
+           
+        ✅Watch Out for the "Eye" of the Storm: Do not go outside if the wind and rain suddenly stop—this may only be the calm center of the typhoon, 
+            and violent winds will return shortly from the opposite direction.
+        ✅Avoid Floodwaters After the Storm: Never walk, swim, or drive through moving floodwater, and stay away from fallen power lines, broken glass,
+            and damaged buildings until local authorities declare the area safe.
     """)
 
 else:

@@ -157,13 +157,19 @@ status = st.selectbox(
 
 if status == "Drought":
     st.error("""
-    ✅ Activate Emergency Pumps in Low-Lying Areas (Purna River Belt)
+    ✅ Store Emergency Drinking Water: Keep at least 3 to 5 days' worth of clean drinking water stored in clean, covered containers (about 3 to 4 liters per person per day).
+        Always boil or filter stored water before drinking to prevent waterborne diseases.
 
-    ✅ Open Water Drainage Channels
-
-    ✅ Issue Public Flood Alert System
-
-    ✅ Keep Rescue & Evacuation Teams Ready
+     ✅Cut Daily Water Waste: Turn off taps tightly while brushing teeth, shaving, or soaping hands.
+        Take short bucket baths instead of long showers, and fix dripping taps or leaking pipes immediately.
+        
+     ✅Reuse Household Greywater: Collect water used for washing fruits, vegetables, rice, or clothes, and reuse it to water plants, flush toilets, or mop floors.
+     
+     ✅Stay Hydrated and Cool: Droughts often bring extreme heat and dry dust.
+        Drink water regularly, avoid heavy outdoor work during peak afternoon sun, and keep a damp cloth handy to prevent heat exhaustion.
+        
+     ✅Follow Local Water Restrictions: Obey municipal water rationing rules, avoid washing cars or courtyards with running hoses,
+         and water essential plants only in the early morning or late evening to reduce evaporation.
     """)
 
 elif status == "Heatwave":

@@ -37,7 +37,7 @@ fig = go.Figure(go.Indicator(
 
 # <--- નવો ઉમેરો (બોક્સનો બેકગ્રાઉન્ડ કલર બદલવા માટે)
 fig.update_layout(
-    paper_bgcolor="#1E293B",
+    paper_bgcolor="rgba(0,0,0,0)",
     font={'color': "#FFFFFF"}
 )
 

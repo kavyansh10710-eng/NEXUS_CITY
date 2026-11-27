@@ -123,10 +123,7 @@ Detect → Predict → Decide
 # -----------------------------
 # HERO IMAGE
 # -----------------------------
-st.image(
-    "assets/hero_banner.png",  # જો મુખ્ય ફોલ્ડરમાં મૂકી હોય તો ફક્ત "hero_banner.png" લખવું
-    use_container_width=True
-)
+
 
 # -----------------------------
 # LIVE WEATHER CARDS

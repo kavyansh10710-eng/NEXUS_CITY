@@ -130,18 +130,34 @@ except:
     aqi = "N/A"
 
 # -----------------------------
-# HERO SECTION
+# HERO SECTION (New Title + Neon Gradient)
 # -----------------------------
 st.markdown("""
-<div style="text-align:center;padding:30px;">
-<h1 style="color:#00E5FF;">
-NEXUS ∞ AI Future Simulator
-</h1>
-<p style="font-size:20px;">
-Detect → Predict → Decide
-</p>
+<div style="text-align:center; padding:25px 10px;">
+    <h1 style="
+        font-size: 48px;
+        font-weight: 800;
+        background: linear-gradient(90deg, #00F2FE 0%, #4FACFE 45%, #C084FC 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0px 0px 25px rgba(0, 242, 254, 0.35);
+        margin-bottom: 8px;
+        letter-spacing: 1.5px;
+    ">
+        SMART CITY COMMAND CENTER
+    </h1>
+    <p style="
+        font-size: 20px;
+        font-weight: 500;
+        color: #E0F2FE;
+        letter-spacing: 3px;
+        text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.6);
+    ">
+        DETECT → PREDICT → DECIDE
+    </p>
 </div>
 """, unsafe_allow_html=True)
+
 
 # -----------------------------
 # LIVE WEATHER CARDS

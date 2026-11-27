@@ -10,6 +10,7 @@ import requests
 from folium.features import DivIcon
 from streamlit_folium import st_folium
 from streamlit_autorefresh import st_autorefresh
+from assets.theme import apply_theme
 
 # =========================
 # PAGE CONFIG
@@ -21,6 +22,7 @@ st.set_page_config(
     layout="wide"
 )
 
+apply_theme()
 # =========================
 # OPENWEATHER API KEY
 # =========================

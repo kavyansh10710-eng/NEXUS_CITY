@@ -19,7 +19,7 @@ fig = go.Figure(go.Indicator(
     title={'text': "Air Quality Index", 'font': {'color': '#FFFFFF', 'size': 24}}, # ટાઈટલનો કલર
     number={'font': {'color': '#BAE6FD'}}, # વચ્ચે દેખાતા AQI નંબરનો કલર
     gauge={
-        'axis': {'range': (0, 500), 'tickcolor': '#0D47A1'},
+        'axis': {'range': (0, 500), 'tickcolor': '#BAE6FD'},
         'bar': {'color': '#CBD5E1'}, # વચ્ચેના મુખ્ય કાંટા/બારનો કલર
         'bgcolor': "white", # મીટરની અંદરના ખાલી ભાગનો કલર
         'borderwidth': 2,

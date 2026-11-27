@@ -80,54 +80,6 @@ st.sidebar.metric(
     "94%"
 )
 
-# -----------------------------
-# VANSDA LIVE WEATHER
-# -----------------------------
-API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
-
-LAT = 20.758
-LON = 73.367
-
-try:
-    weather_url = (
-        f"https://openweathermap.org?"
-        f"lat={LAT}"
-        f"&lon={LON}"
-        f"&appid={API_KEY}"
-        f"&units=metric"
-    )
-
-    weather_data = requests.get(
-        weather_url,
-        timeout=10
-    ).json()
-
-    temp = round(weather_data["main"]["temp"])
-    humidity = weather_data["main"]["humidity"]
-    weather = weather_data["weather"][0]["main"]
-    wind = round(weather_data["wind"]["speed"], 1)
-
-    # AQI DATA
-    aqi_url = (
-        f"https://openweathermap.org?"
-        f"lat={LAT}"
-        f"&lon={LON}"
-        f"&appid={API_KEY}"
-    )
-
-    aqi_data = requests.get(
-        aqi_url,
-        timeout=10
-    ).json()
-
-    aqi = aqi_data["list"][0]["main"]["aqi"]
-
-except:
-    temp = "N/A"
-    humidity = "N/A"
-    weather = "N/A"
-    wind = "N/A"
-    aqi = "N/A"
 
 # -----------------------------
 # HERO SECTION (New Title + Neon Gradient)
@@ -159,49 +111,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# -----------------------------
-# LIVE WEATHER CARDS
-# -----------------------------
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.metric(
-        "🌡️ Temperature",
-        f"{temp}°C"
-    )
+    st.metric("🌊 Flood Prediction", "ACTIVE")
 
 with col2:
-    st.metric(
-        "💧 Humidity",
-        f"{humidity}%"
-    )
+    st.metric("🤖 AI Engine", "ONLINE")
 
 with col3:
-    st.metric(
-        "☁️ Weather",
-        weather
-    )
+    st.metric("🛰️ Smart Sensors", "128")
 
 with col4:
-    st.metric(
-        "🌬️ Wind",
-        f"{wind} m/s"
-    )
-
-with col5:
-    aqi_status = {
-        1: "Good",
-        2: "Fair",
-        3: "Moderate",
-        4: "Poor",
-        5: "Very Poor"
-    }
-
-    st.metric(
-        "🌫️ AQI",
-        aqi_status.get(aqi, "N/A")
-    )
-
+    st.metric("🚨 Alerts", "0")
+    
 # -----------------------------
 # MAIN CONTENT
 # -----------------------------

@@ -146,7 +146,7 @@ st.divider()
 # AI Decision Center (નવસારીની હાલની પરિસ્થિતિ મુજબ આપમેળે પસંદ થશે)
 st.subheader("🧠 AI Decision Center (Navsari)")
 
-situations = ["Flood", "Heatwave", "Air Pollution"]
+situations = ["Drought", "Heatwave", "Air Pollution"]
 default_index = situations.index(live_data["auto_situation"])
 
 status = st.selectbox(
@@ -155,7 +155,7 @@ status = st.selectbox(
     index=default_index
 )
 
-if status == "Flood":
+if status == "Drought":
     st.error("""
     ✅ Activate Emergency Pumps in Low-Lying Areas (Purna River Belt)
 

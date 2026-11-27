@@ -16,11 +16,11 @@ aqi = st.slider(
 fig = go.Figure(go.Indicator(
     mode="gauge+number",
     value=aqi,
-    title={'text': "Air Quality Index", 'font': {'color': '#0D47A1', 'size': 24}}, # ટાઈટલનો કલર
-    number={'font': {'color': '#0D47A1'}}, # વચ્ચે દેખાતા AQI નંબરનો કલર
+    title={'text': "Air Quality Index", 'font': {'color': '#FFFFFF', 'size': 24}}, # ટાઈટલનો કલર
+    number={'font': {'color': '#BAE6FD'}}, # વચ્ચે દેખાતા AQI નંબરનો કલર
     gauge={
         'axis': {'range': (0, 500), 'tickcolor': '#0D47A1'},
-        'bar': {'color': '#1565C0'}, # વચ્ચેના મુખ્ય કાંટા/બારનો કલર
+        'bar': {'color': '#CBD5E1'}, # વચ્ચેના મુખ્ય કાંટા/બારનો કલર
         'bgcolor': "white", # મીટરની અંદરના ખાલી ભાગનો કલર
         'borderwidth': 2,
         'bordercolor': "#90CAF9", # બોર્ડરનો કલર

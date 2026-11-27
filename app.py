@@ -44,7 +44,7 @@ def set_bg_image(image_path):
             f"""
             <style>
             .stApp {{
-                background-image: linear-gradient(rgba(10, 15, 30, 0.33), rgba(10, 15, 30, 0.33)), url("data:image/png;base64,{encoded}") !important;
+                background-image: linear-gradient(rgba(10, 15, 30, 0.3), rgba(10, 15, 30, 0.3)), url("data:image/png;base64,{encoded}") !important;
                 background-size: cover !important;
                 background-position: center !important;
                 background-repeat: no-repeat !important;

@@ -16,9 +16,16 @@ aqi = st.slider(
 fig = go.Figure(go.Indicator(
     mode="gauge+number",
     value=aqi,
-    title={'text': "Air Quality Index"},
+    title={'text': "Air Quality Index", 'font': {'color': '#F8FAFC', 'size': 24}}, # <--- નવો ઉમેરો (ટાઈટલ કલર)
+    number={'font': {'color': '#FFFFFF', 'size': 50}}, # <--- નવો ઉમેરો (વચ્ચેના નંબરનો કલર)
     gauge={
-        'axis': {'range': (0, 500)},
+        'axis': {
+            'range': (0, 500),
+            'tickcolor': '#FFFFFF',  # <--- નવો ઉમેરો (નાની લીટીનો કલર)
+            'tickfont': {'color': '#FFFFFF', 'size': 14} # <--- નવો ઉમેરો (0 થી 500 નંબરનો કલર)
+        },
+        'bar': {'color': '#38BDF8'}, # <--- નવો ઉમેરો (મીટરના કાંટાનો કલર)
+        'bgcolor': "#0F172A", # <--- નવો ઉમેરો (મીટરની અંદરનો કલર)
         'steps': (
             {'range': (0, 50), 'color': 'green'},
             {'range': (51, 100), 'color': 'yellow'},
@@ -27,6 +34,12 @@ fig = go.Figure(go.Indicator(
         )
     }
 ))
+
+# <--- નવો ઉમેરો (બોક્સનો બેકગ્રાઉન્ડ કલર બદલવા માટે)
+fig.update_layout(
+    paper_bgcolor="#1E293B",
+    font={'color': "#FFFFFF"}
+)
 
 st.plotly_chart(
     fig,

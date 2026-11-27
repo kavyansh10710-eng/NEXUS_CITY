@@ -1,8 +1,8 @@
 import streamlit as st
+import requests
+import base64
 from logo import show_logo
 from assets.theme import apply_theme
-import streamlit as st
-import requests
 
 # -----------------------------
 # PAGE CONFIG
@@ -12,6 +12,7 @@ st.set_page_config(
     page_icon="assets/favicon.png",
     layout="wide"
 )
+
 # -----------------------------
 # LOAD CSS
 # -----------------------------
@@ -26,6 +27,40 @@ def load_css():
         pass
 
 load_css()
+
+# -----------------------------
+# LOGO & Theme
+# -----------------------------
+apply_theme()
+
+# -----------------------------
+# SET BACKGROUND IMAGE (GitHub File: assets/hero_banner.png)
+# -----------------------------
+def set_bg_image(image_path):
+    try:
+        with open(image_path, "rb") as img_file:
+            encoded = base64.b64encode(img_file.read()).decode()
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: linear-gradient(rgba(10, 15, 30, 0.70), rgba(10, 15, 30, 0.70)), url("data:image/png;base64,{encoded}") !important;
+                background-size: cover !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+                background-attachment: fixed !important;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    except FileNotFoundError:
+        st.warning("⚠️ assets/hero_banner.png ફાઇલ મળી નથી. GitHub માં ફાઇલનું નામ અને ફોલ્ડર ચેક કરો.")
+
+# તમારી GitHub ફાઇલનો પાથ
+set_bg_image("assets/hero_banner.png")
+
+show_logo()
 
 # -----------------------------
 # SIDEBAR
@@ -45,28 +80,17 @@ st.sidebar.metric(
     "94%"
 )
 
-
-
-# -----------------------------
-# LOGO & Theam
-# -----------------------------
-apply_theme()
-
-show_logo()
-
 # -----------------------------
 # VANSDA LIVE WEATHER
 # -----------------------------
-
-API_KEY = "98d6296f124a940e6ac58e28bbf3625f"   # અહીં તમારી OpenWeather API Key મૂકો
+API_KEY = "98d6296f124a940e6ac58e28bbf3625f"
 
 LAT = 20.758
 LON = 73.367
 
 try:
-
     weather_url = (
-        f"https://api.openweathermap.org/data/2.5/weather?"
+        f"https://openweathermap.org?"
         f"lat={LAT}"
         f"&lon={LON}"
         f"&appid={API_KEY}"
@@ -85,7 +109,7 @@ try:
 
     # AQI DATA
     aqi_url = (
-        f"https://api.openweathermap.org/data/2.5/air_pollution?"
+        f"https://openweathermap.org?"
         f"lat={LAT}"
         f"&lon={LON}"
         f"&appid={API_KEY}"
@@ -99,12 +123,12 @@ try:
     aqi = aqi_data["list"][0]["main"]["aqi"]
 
 except:
-
     temp = "N/A"
     humidity = "N/A"
     weather = "N/A"
     wind = "N/A"
     aqi = "N/A"
+
 # -----------------------------
 # HERO SECTION
 # -----------------------------
@@ -116,19 +140,12 @@ NEXUS ∞ AI Future Simulator
 <p style="font-size:20px;">
 Detect → Predict → Decide
 </p>
-
 </div>
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# HERO IMAGE
-# -----------------------------
-
-
-# -----------------------------
 # LIVE WEATHER CARDS
 # -----------------------------
-
 col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
@@ -156,7 +173,6 @@ with col4:
     )
 
 with col5:
-
     aqi_status = {
         1: "Good",
         2: "Fair",
@@ -203,19 +219,13 @@ c1, c2 = st.columns(2)
 with c1:
     st.markdown("""
 <div class="ai-card">
-
 <h3>🌊 Flood Prediction Engine</h3>
-
 • Rainfall Analysis<br>
 • Risk Score Generation<br>
-
 </div>
 """, unsafe_allow_html=True)
-
-
 
 # -----------------------------
 # FOOTER
 # -----------------------------
 st.markdown("---")
-

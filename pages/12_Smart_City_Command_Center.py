@@ -188,9 +188,18 @@ elif status == "Heatwave":
 
 else:
     st.info("""
-    ✅ Monitor & Reduce Highway/City Traffic Pollution
+    ✅ Check Daily AQI Levels: Monitor the Air Quality Index (AQI) on your phone before stepping out.
+        When AQI exceeds 200 (Poor/Unhealthy), limit outdoor exposure and avoid heavy outdoor exercise like running or cycling.
 
-    ✅ Inspect Industrial & Factory Emissions
+    ✅ Wear a Proper Mask Outdoors: Use a well-fitted N95 or KN95 mask when walking near traffic or dusty areas. 
+        Cloth and surgical masks do not block fine particulate matter (PM2.5).
 
-    ✅ Active Air Quality Surveillance across Navsari
+    ✅ Keep Indoor Air Clean: Close windows and doors during peak traffic hours and early mornings when smog settles near the ground.
+        Run a HEPA air purifier in your bedroom or main living space, and avoid burning incense, candles, or mosquito coils indoors.
+
+    ✅ Clean and Hydrate Your Airways: Wash your face, hands, and nasal passages after returning from outside to clear trapped dust.
+        Drink plenty of water to keep your throat and respiratory tract moist.
+
+    ✅ Eat Antioxidant-Rich Foods: Include vitamin C, vitamin E, and omega-3 foods—such as 
+        citrus fruits, amla, turmeric, nuts, and leafy greens—to help your body fight inflammation caused by polluted air.  
     """)

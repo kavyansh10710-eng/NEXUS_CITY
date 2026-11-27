@@ -11,6 +11,7 @@ st_autorefresh(
     interval=60000,
     key="weather_refresh"
 )
+
 cities = {
     "Navsari": (20.95, 72.93),
     "Ahmedabad": (23.02, 72.57),
@@ -30,6 +31,7 @@ url = (
     f"?latitude={lat}"
     f"&longitude={lon}"
     f"&current=temperature_2m,relative_humidity_2m,wind_speed_10m,rain"
+    f"&timezone=auto"
 )
 
 try:
@@ -64,4 +66,6 @@ try:
         "🌧 Rainfall",
         f"{rainfall} mm"
     )
-  
+
+except Exception as e:
+    st.error("⚠️ લાઇવ હવામાન ડેટા લોડ કરવામાં સમસ્યા આવી રહી છે. કૃપા કરીને થોડીવાર પછી ફરી પ્રયાસ કરો.")

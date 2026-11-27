@@ -20,7 +20,7 @@ fig = go.Figure(go.Indicator(
     number={'font': {'color': '#BAE6FD'}}, # વચ્ચે દેખાતા AQI નંબરનો કલર
     gauge={
         'axis': {'range': (0, 500), 'tickcolor': '#BAE6FD'},
-        'bar': {'color': '#CBD5E1'}, # વચ્ચેના મુખ્ય કાંટા/બારનો કલર
+        'bar': {'color': '#FDE047'}, # વચ્ચેના મુખ્ય કાંટા/બારનો કલર
         'bgcolor': "white", # મીટરની અંદરના ખાલી ભાગનો કલર
         'borderwidth': 2,
         'bordercolor': "#90CAF9", # બોર્ડરનો કલર

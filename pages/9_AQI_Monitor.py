@@ -35,7 +35,7 @@ fig = go.Figure(go.Indicator(
 
 # આ ભાગ ચાર્ટના કાળા બોક્સનો કલર બદલશે
 fig.update_layout(
-    paper_bgcolor="#E3F2FD",  # ચાર્ટના મુખ્ય બોક્સનો બેકગ્રાઉન્ડ કલર
+    paper_bgcolor="rgba(0,0,0,0)",  # ચાર્ટના મુખ્ય બોક્સનો બેકગ્રાઉન્ડ કલર
     font={'color': "#0D47A1"} # ચાર્ટના બધા અક્ષરોનો કલર
 )
 
